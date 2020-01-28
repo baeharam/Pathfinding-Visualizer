@@ -1,54 +1,45 @@
-import React, { useState, useRef } from 'react';
-import PriorityQueue from 'js-priority-queue';
+import React, { useState, useEffect, useRef } from 'react';
+import { BOARD_ROW, BOARD_COL, FIXED_COLOR } from './constants';
+import Dijkstra from './algorithms/dijkstra';
+
+const begin = { x: 7, y: 2 };
+const end = { x: 1, y: 9 };
+const arr = new Array(BOARD_ROW);
+for(let i=0; i<BOARD_ROW; i++){
+  arr[i] = [];
+  for(let j=0; j<BOARD_COL; j++){
+    arr[i][j] = {};
+  }
+}
+arr[begin.x][begin.y] = { color: FIXED_COLOR, visit: true};
+arr[end.x][end.y].color = FIXED_COLOR;
 
 const App = () => {
 
-  const [board, setBoard] = useState(Array(10).fill(Array(10).fill(null)));
-  
-  const dist = new Array(10);
-  for(let i=0; i<10; i++) dist[i] = new Array(10).fill(Infinity);
-  const dx = [-1,1,0,0];
-  const dy = [0,0,-1,1];
-
-  const begin = { row: 7, col: 2 };
-  dist[7][2] = 0;
-
+  const [board, setBoard] = useState(arr);
+  const _dijkstra = new Dijkstra({ begin, end, board, setState: setBoard, delay: 100 });
+  const dijkstra = useRef(_dijkstra);
 
   const onButtonClick = () => {
-    const temp = JSON.parse(JSON.stringify(board));
-    const q = new PriorityQueue({ comparator : (a,b) => a.d - b.d });
-    q.queue({ x: begin.row, y: begin.col, d: 0})
-    while(q.length){
-      const cur = q.peek(); q.dequeue();
-      const x = cur.x, y = cur.y, d = cur.d;
-      console.log(dist);
-      if(d > dist[x][y]) continue;
-      for(let i=0; i<4; i++){
-        const _dx = x + dx[i];
-        const _dy = y + dy[i];
-        if(_dx < 0 || _dx >= 10 || _dy < 0 || _dy >= 10) continue;
-        if(dist[x][y]+1 >= dist[_dx][_dy]) continue;
-        temp[_dx][_dy] = 'yellow';
-        dist[_dx][_dy] = dist[x][y] + 1;
-        q.queue({x: _dx, y: _dy, d: dist[_dx][_dy]});
-      }
-      const copy = JSON.parse(JSON.stringify(temp));
-      setTimeout(() => {setBoard(copy)},1000*d);
-    }
+    dijkstra.current.execute();
   };
+
+  useEffect(() => {
+    if(board[end.x][end.y].visit) {
+      dijkstra.current.paintShortestPath();
+    }
+  }, [board, dijkstra]);
 
   return (
     <>
       {board.map((row,ridx) => (
         <div key={ridx} style={{ display: 'flex' }}>
           {row.map((col, cidx) => {
-            const bg = (begin.row === ridx && begin.col === cidx ? 'black' : null);
-            const color = board[ridx][cidx];
-            return <div key={cidx+color} style={{
+            return <div key={2*ridx+cidx} style={{
               width: '64px',
               height: '64px',
               border: '1px solid black',
-              backgroundColor: (bg || color)
+              backgroundColor: (board[ridx][cidx].color || null)
             }}></div>
           })}
           <br/>
