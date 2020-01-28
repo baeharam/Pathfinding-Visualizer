@@ -4,7 +4,7 @@ import {
   BOARD_COL,
   VISITED_COLOR,
   SHORTEST_COLOR
-} from '../constants';
+} from 'constants.js';
 
 const dx = [-1,1,0,0];
 const dy = [0,0,-1,1];
