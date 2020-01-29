@@ -1,8 +1,57 @@
-.header {
+@import 'open-color/open-color';
+
+.content-header {
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 60px;
-  border: 1px solid red;
   margin-bottom: 20px;
+  padding: 10px 0;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: white;
+
+  &__select {
+    width: 200px;
+    margin-right: 20px;
+    border-radius: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background: $oc-indigo-5;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 5px;
+    padding-left: 10px;
+  }
+
+  &__button {
+    font-family: inherit;
+    font-weight: bold;
+    font-size: inherit;
+    cursor: pointer;
+    background: $oc-blue-5;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    padding: 0 10px;
+    margin-right: 20px;
+    box-shadow: 0 3px 3px 0 $oc-blue-3;
+    color: inherit;
+    transition: transform 0.2s linear;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      transform: translateY(-10%);
+    }
+  }
 }
