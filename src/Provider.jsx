@@ -22,12 +22,16 @@ const Provider = (props) => {
   const [board, setBoard] = useState(_board);
   const pathFinder = useRef(PathFinder.dijkstra);
 
+  const clear = () => {
+    setBoard(_board);
+  };
+
   return (
     <Context.Provider value={{
       begin, setBegin,
       end, setEnd,
       board, setBoard,
-      pathFinder
+      pathFinder,clear
     }}
     >
       {props.children}
