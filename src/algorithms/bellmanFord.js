@@ -34,7 +34,8 @@ export default class BellmanFord extends PathFinder {
         }
         if (isUpdated) {
           const temp = JSON.parse(JSON.stringify(copy));
-          setTimeout(() => { this.setState(temp) }, this.delay*timeFactor);
+          const timer = setTimeout(() => { this.setState(temp) }, this.delay*timeFactor);
+          this.timers.push(timer);
           timeFactor++;
         }
       }
@@ -50,6 +51,7 @@ export default class BellmanFord extends PathFinder {
       timeFactor++;
     }
     this.copy[this.end.x][this.end.y].visit = true;
-    setTimeout(() => { this.setState(this.copy) }, this.delay*timeFactor);
+    const timer = setTimeout(() => { this.setState(this.copy) }, this.delay*timeFactor);
+    this.timers.push(timer);
   }
 }

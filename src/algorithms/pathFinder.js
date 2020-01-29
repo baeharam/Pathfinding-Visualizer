@@ -19,6 +19,11 @@ export default class PathFinder {
     this.delay = delay
     this.dx = [-1,1,0,0];
     this.dy = [0,0,-1,1];
+    this.timers = [];
+  }
+
+  clearTimers() {
+    this.timers.forEach((timer) => { clearTimeout(timer); });
   }
 
   paintShortestPath() {
@@ -40,7 +45,8 @@ export default class PathFinder {
       y = path[i].y;
       this.copy[x][y].color = SHORTEST_COLOR;
       const temp = JSON.parse(JSON.stringify(this.copy));
-      setTimeout(() => { this.setState(temp) }, this.delay*(path.length-i));
+      const timer = setTimeout(() => { this.setState(temp) }, this.delay*(path.length-i));
+      this.timers.push(timer);
     }
   }
 }
