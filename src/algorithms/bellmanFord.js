@@ -2,6 +2,7 @@ import {
   BOARD_ROW,
   BOARD_COL,
   VISITED_COLOR,
+  CLICKED_COLOR,
 } from 'constants.js';
 import PathFinder from './pathFinder';
 
@@ -23,6 +24,7 @@ export default class BellmanFord extends PathFinder {
           const nextY = j + this.dy[k];
           if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
           if (dist[i][j] === Infinity || dist[i][j] + 1 >= dist[nextX][nextY]) continue;
+          if (copy[nextX][nextY].color === CLICKED_COLOR) continue;
 
           dist[nextX][nextY] = dist[i][j] + 1;
           if (!(nextX === this.end.x && nextY === this.end.y)) {
@@ -51,7 +53,8 @@ export default class BellmanFord extends PathFinder {
       timeFactor++;
     }
     this.copy[this.end.x][this.end.y].visit = true;
-    const timer = setTimeout(() => { this.setState(this.copy) }, this.delay*timeFactor);
+    const temp = JSON.parse(JSON.stringify(this.copy));
+    const timer = setTimeout(() => { this.setState(temp) }, this.delay*timeFactor);
     this.timers.push(timer);
   }
 }

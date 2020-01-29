@@ -24,6 +24,7 @@ export default class PathFinder {
 
   clearTimers() {
     this.timers.forEach((timer) => { clearTimeout(timer); });
+    this.timers = [];
   }
 
   paintShortestPath() {
