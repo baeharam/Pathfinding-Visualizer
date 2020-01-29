@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+
+  &__title {
+    font-size: 60px;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  
+  &__author {
+    font-size: 20px;
+  }
+}
