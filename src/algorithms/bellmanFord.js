@@ -19,7 +19,7 @@ export default class BellmanFord extends PathFinder {
     for(let i=0; i<BOARD_ROW; i++){
       for(let j=0; j<BOARD_COL; j++){
         let isUpdated = false;
-        for(let k=0; k<4; k++){
+        for(let k=0; k<this.dx.length; k++){
           const nextX = i + this.dx[k];
           const nextY = j + this.dy[k];
           if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;

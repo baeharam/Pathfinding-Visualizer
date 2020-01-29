@@ -26,7 +26,7 @@ export default class Dijkstra extends PathFinder {
       const currentD = current.d;
       
       let isUpdated = false;
-      for(let i=0; i<4; i++) {
+      for(let i=0; i<this.dx.length; i++) {
         const nextX = currentX + this.dx[i];
         const nextY = currentY + this.dy[i];
       
@@ -52,7 +52,7 @@ export default class Dijkstra extends PathFinder {
         this.pq.queue({ x: nextX, y: nextY, d: this.dist[nextX][nextY] });
       }
       
-      if (isUpdated) {
+      if (isUpdated || find) {
         const temp = JSON.parse(JSON.stringify(this.copy));
         const timer = setTimeout(() => { this.setState(temp) }, this.delay*currentD);
         this.timers.push(timer);

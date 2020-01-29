@@ -30,7 +30,9 @@ const Header = () => {
     pathFinder.current.execute();
   };
 
-  const onClear = () => { clear(); }
+  const onClear = () => { 
+    clear();
+  };
 
   useEffect(() => {
     if (board[end.x][end.y].visit) {
