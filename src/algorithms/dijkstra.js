@@ -14,13 +14,17 @@ export default class Dijkstra extends PathFinder {
   }
 
   execute() {
-    this.pq.queue({ x: this.begin.x, y: this.begin.y, d: 0 });
-    this.dist[this.begin.x][this.begin.y] = 0;
+    const pq = this.pq;
+    const dist = this.dist;
+    const prev = this.prev;
+    const copy = this.copy;
+
+    pq.queue({ x: this.begin.x, y: this.begin.y, d: 0 });
     let find = false;
 
-    while(this.pq.length) {
-      const current = this.pq.peek();
-      this.pq.dequeue();
+    while(pq.length) {
+      const current = pq.peek();
+      pq.dequeue();
       const currentX = current.x;
       const currentY = current.y;
       const currentD = current.d;
@@ -30,34 +34,33 @@ export default class Dijkstra extends PathFinder {
         const nextX = currentX + this.dx[i];
         const nextY = currentY + this.dy[i];
       
-        if(nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
-        if(this.dist[currentX][currentY] + 1 >= this.dist[nextX][nextY]) continue;
-        if(this.copy[nextX][nextY].color === CLICKED_COLOR) continue;
+        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
+        if (dist[currentX][currentY] === Infinity || dist[currentX][currentY] + 1 >= dist[nextX][nextY]) continue;
+        if (copy[nextX][nextY].color === CLICKED_COLOR) continue;
 
-        if(nextX === this.end.x && nextY === this.end.y) {
-          this.copy[nextX][nextY].visit = true;
-          this.prev[nextX][nextY].x = currentX;
-          this.prev[nextX][nextY].y = currentY;
+        if (nextX === this.end.x && nextY === this.end.y) {
+          copy[nextX][nextY].visit = true;
+          prev[nextX][nextY] = current;
+          isUpdated = true;
           find = true;
           break;
         }
 
         isUpdated = true;
-        this.copy[nextX][nextY].color = VISITED_COLOR;
-        this.copy[nextX][nextY].visit = true;
+        copy[nextX][nextY] = { color: VISITED_COLOR, visit: true };
+        dist[nextX][nextY] = dist[currentX][currentY] + 1;
+        prev[nextX][nextY] = current;
 
-        this.dist[nextX][nextY] = this.dist[currentX][currentY] + 1;
-        this.prev[nextX][nextY].x = currentX;
-        this.prev[nextX][nextY].y = currentY;
-        this.pq.queue({ x: nextX, y: nextY, d: this.dist[nextX][nextY] });
+        pq.queue({ x: nextX, y: nextY, d: dist[nextX][nextY] });
       }
       
-      if (isUpdated || find) {
-        const temp = JSON.parse(JSON.stringify(this.copy));
+      if (isUpdated) {
+        const temp = this.copyBoard(this.copy);
         const timer = setTimeout(() => { this.setState(temp) }, this.delay*currentD);
         this.timers.push(timer);
+
+        if (find) break;
       }
-      if(find) break;
     }
   }
 }

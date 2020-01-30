@@ -4,18 +4,22 @@ export default class PathFinder {
   constructor({ begin, end, board, setState, delay }){
     this.begin = begin;
     this.end = end;
-    this.copy = JSON.parse(JSON.stringify(board));
+    this.copy = this.copyBoard(board);
     this._init();
     this.setState = setState;
-    this.delay = delay
+    this.delay = delay;
     this.dx = [-1,1,0,0];
     this.dy = [0,0,-1,1];
     this.timers = [];
   }
 
   clear(newBoard) {
-    this.copy = JSON.parse(JSON.stringify(newBoard));
+    this.copy = this.copyBoard(newBoard);
     this._init();
+  }
+
+  copyBoard(target) {
+    return JSON.parse(JSON.stringify(target));
   }
 
   _init() {
@@ -29,6 +33,7 @@ export default class PathFinder {
         this.prev[i][j] = { x: -1, y: -1 };
       }
     }
+    this.dist[this.begin.x][this.begin.y] = 0;
   }
 
   clearTimers() {
@@ -38,6 +43,7 @@ export default class PathFinder {
 
   paintShortestPath() {
     this.copy[this.end.x][this.end.y].visit = false;
+
     const path = [];
     let x = this.end.x;
     let y = this.end.y;

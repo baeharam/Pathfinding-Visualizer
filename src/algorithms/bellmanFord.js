@@ -9,19 +9,21 @@ import PathFinder from './pathFinder';
 export default class BellmanFord extends PathFinder {
   constructor({begin, end, board, setState, delay}){
     super({begin, end, board, setState, delay});
-    this.empty = JSON.parse(JSON.stringify(board));
   }
 
   _relax(timeFactor) {
     const copy = this.copy;
     const dist = this.dist;
     const prev = this.prev;
+
     for(let i=0; i<BOARD_ROW; i++){
       for(let j=0; j<BOARD_COL; j++){
+
         let isUpdated = false;
         for(let k=0; k<this.dx.length; k++){
           const nextX = i + this.dx[k];
           const nextY = j + this.dy[k];
+
           if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
           if (dist[i][j] === Infinity || dist[i][j] + 1 >= dist[nextX][nextY]) continue;
           if (copy[nextX][nextY].color === CLICKED_COLOR) continue;
@@ -46,7 +48,6 @@ export default class BellmanFord extends PathFinder {
   }
 
   execute() {
-    this.dist[this.begin.x][this.begin.y] = 0;
     let timeFactor = 1;
     for(let i=1; i<=this.copy.length-1; i++) {
       timeFactor = this._relax(timeFactor);
