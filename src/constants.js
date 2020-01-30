@@ -15,6 +15,7 @@ export const INITIAL_COLOR = 'rgba(0,0,0,0.3)';
 export const DIJKSTRA = 'dijkstra';
 export const BELLMAN_FORD = 'bellman-ford';
 export const A_STAR = 'A-star';
+export const DFS = 'DFS';
 
 // uuid
 export const KEYS = [];
