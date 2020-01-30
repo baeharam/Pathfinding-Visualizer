@@ -15,14 +15,6 @@ const Board = ({ name, ref }) => {
     setClicking(false);
   };
 
-  const changeColorHandler = (ridx, cidx) => {
-    return () => {
-      const copy = JSON.parse(JSON.stringify(board));
-      copy[ridx][cidx].color = CLICKED_COLOR;
-      setBoard(copy);
-    };
-  };
-
   return (
     <div className="board" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       {board.map((row,ridx) => (
@@ -30,7 +22,11 @@ const Board = ({ name, ref }) => {
           {row.map((col, cidx) => {
             let onMouseMove = null;
             if (board[ridx][cidx].color === INITIAL_COLOR && clicking) {
-              onMouseMove = changeColorHandler(ridx, cidx);
+              onMouseMove = () => {
+                const copy = JSON.parse(JSON.stringify(board));
+                copy[ridx][cidx].color = CLICKED_COLOR;
+                setBoard(copy);
+              };
             }
 
             return (
@@ -38,7 +34,6 @@ const Board = ({ name, ref }) => {
                 className="board__col" 
                 key={2*ridx+cidx}
                 onMouseMove={onMouseMove}
-                onClick={changeColorHandler(ridx, cidx)}
                 style={{
                   background: board[ridx][cidx].color,
                   transition: (clicking ? 'none' : 'background-color 0.3s linear')
