@@ -16,7 +16,7 @@ export default class Dijkstra extends PathFinder {
     this.pq = new PriorityQueue<Object>({ comparator: (a, b) => a.d - b.d });
   }
 
-  execute = () => {
+  execute = () : boolean => {
     const { pq, dist, prev, copy, begin, end } = this;
 
     pq.queue({ x: begin.x, y: begin.y, d: 0 });
@@ -56,8 +56,12 @@ export default class Dijkstra extends PathFinder {
       
       if (isUpdated) {
         this.updateBoard(currentD);
-        if (find) break;
+        if (find) {
+          pq.clear();
+          return true;
+        }
       }
     }
+    return false;
   }
 }

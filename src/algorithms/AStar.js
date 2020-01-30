@@ -25,7 +25,7 @@ export default class AStar extends PathFinder {
     return Math.abs(start.x - this.end.x) + Math.abs(start.y - this.end.y);
   }
 
-  execute = () => {
+  execute = () : boolean => {
     const { 
       dist, pq, opened, copy,
       prev, begin, _h, end
@@ -80,8 +80,9 @@ export default class AStar extends PathFinder {
 
       if (find) {
         pq.clear();
-        break;
+        return true;
       }
     }
+    return false;
   }
 }

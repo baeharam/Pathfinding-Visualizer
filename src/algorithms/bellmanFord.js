@@ -10,9 +10,9 @@ import PathFinder from './pathFinder';
 
 export default class BellmanFord extends PathFinder {
 
-  _relax = (timeFactor : number) : number => {
+  _relax = (timeFactor : number) : {| timeFactor: number, find: boolean|} => {
     const { copy, dist, prev, end } = this;
-  
+    let find = false;
     for(let i=0; i<BOARD_ROW; i++){
       for(let j=0; j<BOARD_COL; j++){
 
@@ -28,8 +28,10 @@ export default class BellmanFord extends PathFinder {
           dist[nextX][nextY] = dist[i][j] + 1;
           if (!(nextX === end.x && nextY === end.y)) {
             copy[nextX][nextY].color = VISITED_COLOR;
-            copy[nextX][nextY].visit = true;
+          } else {
+            find = true;
           }
+          copy[nextX][nextY].visit = true;
           prev[nextX][nextY] = { x: i, y: j };
           isUpdated = true;
         }
@@ -39,17 +41,19 @@ export default class BellmanFord extends PathFinder {
         }
       }
     }
-    return timeFactor;
+    return { timeFactor, find };
   }
 
-  execute = () => {
-    const { copy, _relax, end } = this;
-    let timeFactor = 1;
+  execute = () : boolean => {
+    const { copy, _relax } = this;
+    let timeFactor = 1, find = false;
     for(let i=1; i<=copy.length-1; i++) {
-      timeFactor = _relax(timeFactor);
+      const relaxedResult = _relax(timeFactor);
+      timeFactor = relaxedResult.timeFactor;
       timeFactor++;
+      if (relaxedResult.find) find = true;
     }
-    copy[end.x][end.y].visit = true;
     this.updateBoard(timeFactor);
+    return find;
   }
 }
