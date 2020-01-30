@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useRef, type Node } from 'react';
 import { BOARD_ROW, BOARD_COL, FIXED_COLOR, INITIAL_COLOR } from './constants';
+import PathFinder from 'algorithms/pathFinder';
 
 type PositionType = {|x: number, y: number|};
 type BoardType = Array<Array<{|color: string, visit: boolean|}>>;
@@ -45,8 +46,12 @@ const Provider = (props : {| children: Node |}) => {
 
   const clear = () => {
     setBoard(_board);
-    setIsPathExist(true);
-    pathFinder.current.clear(_board);
+    if (isPathExist === false) {
+      setIsPathExist(true);
+    }
+    if (pathFinder.current instanceof PathFinder) {
+      pathFinder.current.clear(_board);
+    }
   };
 
   return (
