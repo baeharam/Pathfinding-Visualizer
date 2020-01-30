@@ -1,5 +1,6 @@
 import uuidv4 from 'uuid/v4';
 
+// Board Size
 export const BOARD_ROW = 16;
 export const BOARD_COL = 30;
 
@@ -21,5 +22,17 @@ for (let i=0; i<BOARD_ROW; i++) {
   KEYS[i] = [];
   for (let j=0; j<BOARD_COL; j++) {
     KEYS[i][j] = uuidv4();
+  }
+}
+
+// Board
+export const BOARD = [];
+for(let i=0; i<BOARD_ROW; i++){
+  BOARD[i] = [];
+  for(let j=0; j<BOARD_COL; j++){
+    BOARD[i][j] = {
+      color: INITIAL_COLOR,
+      visit: false
+    };
   }
 }
