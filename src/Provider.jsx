@@ -60,7 +60,7 @@ const Provider = (props : {| children: Node |}) => {
       end, setEnd,
       board, setBoard,
       pathFinder,clear,
-      isPathExist, setIsPathExist
+      isPathExist, setIsPathExist,
     }}
     >
       {props.children}

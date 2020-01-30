@@ -17,9 +17,6 @@ const Header = () => {
     setIsPathExist 
   } = context;
 
-  declare type ElementEvent<E> = {
-      target: E
-  } & Event;
   const onAlgoChange = (e : ElementEvent<HTMLSelectElement>) => {
     setType(e.target.value);
   };

@@ -1,12 +1,15 @@
+// @flow
+
 import React, { useContext, useState } from 'react';
-import { Context } from 'Provider';
+import { Context, type ContextType } from 'Provider';
 import { CLICKED_COLOR, INITIAL_COLOR, KEYS } from 'constants.js';
 import './Board.scss';
 
-const Board = ({ name, ref }) => {
-  const context = useContext(Context);
+const Board = () => {
+  const context = useContext<ContextType>(Context);
   const { board, setBoard } = context;
-  const [clicking, setClicking] = useState(false);
+  const [clicking, setClicking] = useState<boolean>(false);
+
   const onMouseDown = () => {
     setClicking(true);
   };
@@ -14,27 +17,32 @@ const Board = ({ name, ref }) => {
     setClicking(false);
   };
 
-  const changeColor = (e) => {
+  const changeColor = (e : ElementEvent<HTMLDivElement>) => {
     if (e.target.className !== 'board__col') return;
     if (e.target.style.backgroundColor === INITIAL_COLOR) return;
-    const data = e.target.dataset;
-    const ridx = data.ridx*1, cidx = data.cidx*1;
+    const data : DOMStringMap = e.target.dataset;
+    const ridx = parseInt(data.ridx), cidx = parseInt(data.cidx);
     const copy = JSON.parse(JSON.stringify(board));
     copy[ridx][cidx].color = CLICKED_COLOR;
     setBoard(copy);
   }
 
-  const onClick = (e) => {
+  const onClick = (e : ElementEvent<HTMLDivElement>) => {
     changeColor(e);
   };
 
-  const onMouseMove = (e) => {
+  const onMouseMove = (e : ElementEvent<HTMLDivElement>) => {
     if (!clicking) return;
     changeColor(e);
   };
 
   return (
-    <div className="board" onMouseDown={onMouseDown} onMouseUp={onMouseUp} onClick={onClick} onMouseMove={onMouseMove}>
+    <div className="board" 
+      onMouseDown={onMouseDown} 
+      onMouseUp={onMouseUp} 
+      onClick={onClick} 
+      onMouseMove={onMouseMove}>
+
       {board.map((row,ridx) => (
         <div className="board__row" key={ridx} style={{ display: 'flex', justifyContent: 'center'}}>
           {row.map((col, cidx) => (
