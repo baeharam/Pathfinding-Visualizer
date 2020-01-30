@@ -1,6 +1,7 @@
 .board {
   display: flex;
   flex-direction: column;
+  outline: none;
 
   &__row {
     display: flex;

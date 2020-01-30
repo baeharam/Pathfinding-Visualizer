@@ -14,7 +14,7 @@ const Header = () => {
   const { 
     begin, end, board, setBoard, 
     pathFinder, clear, 
-    setIsPathExist 
+    setIsPathExist, setMoveEndPoints 
   } = context;
 
   const onAlgoChange = (e : ElementEvent<HTMLSelectElement>) => {
@@ -41,6 +41,10 @@ const Header = () => {
     clear();
   };
 
+  const onMoveEndpoints = () => {
+    setMoveEndPoints(true);
+  };
+
   useEffect(() => {
     if (board[end.x][end.y].visit) {
       pathFinder.current.paintShortestPath();
@@ -54,8 +58,8 @@ const Header = () => {
   }, [board, pathFinder, end]);
 
   return (
-    <header className="content-header">
-      <select className="content-header__select" onChange={onAlgoChange}>
+    <div className="content-header">
+      <select className="content-header__select" onChange={onAlgoChange} id="algorithm">
         <option value={DIJKSTRA} defaultChecked={true}>Dijkstra</option>
         <option value={BELLMAN_FORD}>Bellman-Ford</option>
         <option value={A_STAR}>A*</option>
@@ -73,7 +77,10 @@ const Header = () => {
       <button className="content-header__button" onClick={onClear}>
         Clear
       </button>
-    </header>
+      <button className="content-header__button" onClick={onMoveEndpoints}>
+        Move Endpoints
+      </button>
+    </div>
   );
 };
 

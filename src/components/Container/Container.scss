@@ -38,15 +38,31 @@
   justify-content: center;
   font-weight: bold;
 
+  &--info {
+    @extend .modal;
+    border-color: skyblue;
+    height: 300px;
+  }
+
   &__title {
     font-family: inherit;
     font-size: 36px;
     color: red;
     margin-bottom: 20px;
+
+    &--info {
+      @extend .modal__title;
+      color: skyblue;
+    }
   }
 
   &__content {
     font-size: 20px;
+
+    span {
+      font-size: 24px;
+      color: blue;
+    }
   }
 
   &__close {
@@ -60,5 +76,10 @@
     background-color: rgb(250, 164, 164);
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s linear;
+
+    &:hover {
+      background-color: rgb(250, 73, 73);
+    }
   }
 }

@@ -18,18 +18,30 @@ const Container = () => {
   };
 
   const context = useContext(Context);
-  const { isPathExist, pathFinder, clear } : ContextType = context;
-  const [isOpen, setIsOpen] = useState(false);
+  const { 
+    isPathExist, pathFinder, clear, 
+    moveEndPoints, setMoveEndPoints 
+  } : ContextType = context;
+  const [isErrorOpen, setIsErrorOpen] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   useEffect(() => {
     if (!isPathExist) {
       clear();
       pathFinder.current.clearTimers();
-      setIsOpen(true);
+      setIsErrorOpen(true);
     }
   }, [isPathExist, pathFinder, clear]);
 
-  const onClose = () => { setIsOpen(false); };
+  useEffect(() => {
+    if (moveEndPoints) {
+      setMoveEndPoints(false);
+      setIsInfoOpen(true);
+    }
+  }, [moveEndPoints,setMoveEndPoints])
+
+  const onErrorClose = () => { setIsErrorOpen(false); };
+  const onInfoClose = () => { setIsInfoOpen(false); };
 
   return (
     <>
@@ -38,13 +50,30 @@ const Container = () => {
       </header>
       <Modal
         className="modal"
-        isOpen={isOpen}
+        isOpen={isErrorOpen}
         contentLabel="Example Modal"
-        onRequestClose={onClose}
+        onRequestClose={onErrorClose}
       >
         <h1 className="modal__title">Error!</h1>
         <p className="modal__content">Cannot find path to the goal</p>
-        <button onClick={onClose} className="modal__close">X</button>
+        <button onClick={onErrorClose} className="modal__close">X</button>
+      </Modal>
+      <Modal
+        className="modal--info"
+        isOpen={isInfoOpen}
+        contentLabel="Example Modal"
+        onRequestClose={onInfoClose}
+      >
+        <h1 className="modal__title--info">Info!</h1>
+        <p className="modal__content">
+          <span>Move begin endpoint</span><br/><br/>
+          control key + mouse
+        </p><br/><br/>
+        <p className="modal__content">
+          <span>Move end endpoint</span><br/><br/>
+          alt key + mouse
+        </p>
+        <button onClick={onInfoClose} className="modal__close">X</button>
       </Modal>
       <Header />
       <Board />

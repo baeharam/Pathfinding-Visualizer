@@ -1,7 +1,7 @@
 // @flow
 
 import React, { createContext, useState, useRef, type Node } from 'react';
-import { BOARD_ROW, BOARD_COL, FIXED_COLOR, INITIAL_COLOR } from './constants';
+import { FIXED_COLOR, INITIAL_COLOR, BOARD } from './constants';
 import PathFinder from 'algorithms/pathFinder';
 
 type PositionType = {|x: number, y: number|};
@@ -18,49 +18,42 @@ export type ContextType = {|
   setIsPathExist: (boolean) => void,
   clear: (void) => void,
   pathFinder: any,
+  moveEndPoints: boolean,
+  setMoveEndPoints: (boolean) => void
 |};
 
 const Context = createContext<ContextType>();
 let _begin = { x: 7, y: 2 };
 let _end = { x: 11, y: 25 };
-const _board : BoardType = new Array(BOARD_ROW);
-for(let i=0; i<BOARD_ROW; i++){
-  _board[i] = [];
-  for(let j=0; j<BOARD_COL; j++){
-    _board[i][j] = {
-      color: INITIAL_COLOR,
-      visit: false
-    };
-  }
-}
-_board[_begin.x][_begin.y] = { color: FIXED_COLOR, visit: true };
-_board[_end.x][_end.y] = { color: FIXED_COLOR, visit: false };
+BOARD[_begin.x][_begin.y] = { color: FIXED_COLOR, visit: true };
+BOARD[_end.x][_end.y] = { color: FIXED_COLOR, visit: false };
 
 const Provider = (props : {| children: Node |}) => {
 
   const [begin, setBegin] = useState<PositionType>(_begin);
   const [end, setEnd] = useState<PositionType>(_end);
-  const [board, setBoard] = useState<BoardType>(_board);
+  const [board, setBoard] = useState<BoardType>(BOARD);
   const [isPathExist, setIsPathExist] = useState<boolean>(true);
+  const [moveEndPoints, setMoveEndPoints] = useState<boolean>(false);
   const pathFinder = useRef<any>(null);
 
   const _clearPoints = () => {
-    _board[_begin.x][_begin.y] = { color: INITIAL_COLOR, visit: false };
-    _board[_end.x][_end.y] = { color: INITIAL_COLOR, visit: false };
-    _board[begin.x][begin.y] = { color: FIXED_COLOR, visit: true };
-    _board[end.x][end.y] = { color: FIXED_COLOR, visit: false };
+    BOARD[_begin.x][_begin.y] = { color: INITIAL_COLOR, visit: false };
+    BOARD[_end.x][_end.y] = { color: INITIAL_COLOR, visit: false };
+    BOARD[begin.x][begin.y] = { color: FIXED_COLOR, visit: true };
+    BOARD[end.x][end.y] = { color: FIXED_COLOR, visit: false };
     _begin = begin;
     _end = end;
   };
 
   const clear = () => {
     _clearPoints()
-    setBoard(_board);
+    setBoard(BOARD);
     if (isPathExist === false) {
       setIsPathExist(true);
     }
     if (pathFinder.current instanceof PathFinder) {
-      pathFinder.current.clear(_board);
+      pathFinder.current.clear(BOARD);
     }
   };
 
@@ -71,6 +64,7 @@ const Provider = (props : {| children: Node |}) => {
       board, setBoard,
       pathFinder,clear,
       isPathExist, setIsPathExist,
+      moveEndPoints, setMoveEndPoints
     }}
     >
       {props.children}
