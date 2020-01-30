@@ -21,8 +21,8 @@ export type ContextType = {|
 |};
 
 const Context = createContext<ContextType>();
-const _begin = { x: 7, y: 2 };
-const _end = { x: 11, y: 25 };
+let _begin = { x: 7, y: 2 };
+let _end = { x: 11, y: 25 };
 const _board : BoardType = new Array(BOARD_ROW);
 for(let i=0; i<BOARD_ROW; i++){
   _board[i] = [];
@@ -44,7 +44,17 @@ const Provider = (props : {| children: Node |}) => {
   const [isPathExist, setIsPathExist] = useState<boolean>(true);
   const pathFinder = useRef<any>(null);
 
+  const _clearPoints = () => {
+    _board[_begin.x][_begin.y] = { color: INITIAL_COLOR, visit: false };
+    _board[_end.x][_end.y] = { color: INITIAL_COLOR, visit: false };
+    _board[begin.x][begin.y] = { color: FIXED_COLOR, visit: true };
+    _board[end.x][end.y] = { color: FIXED_COLOR, visit: false };
+    _begin = begin;
+    _end = end;
+  };
+
   const clear = () => {
+    _clearPoints()
     setBoard(_board);
     if (isPathExist === false) {
       setIsPathExist(true);
