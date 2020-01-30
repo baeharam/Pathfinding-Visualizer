@@ -23,10 +23,12 @@ const Provider = (props) => {
   const [begin, setBegin] = useState(_begin);
   const [end, setEnd] = useState(_end);
   const [board, setBoard] = useState(_board);
+  const [isPathExist, setIsPathExist] = useState(true);
   const pathFinder = useRef(PathFinder.dijkstra);
 
   const clear = () => {
     setBoard(_board);
+    setIsPathExist(true);
     pathFinder.current.clear(_board);
   };
 
@@ -36,6 +38,7 @@ const Provider = (props) => {
       end, setEnd,
       board, setBoard,
       pathFinder,clear,
+      isPathExist, setIsPathExist
     }}
     >
       {props.children}

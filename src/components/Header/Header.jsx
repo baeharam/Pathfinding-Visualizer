@@ -9,7 +9,11 @@ const Header = () => {
   const [type, setType] = useState(DIJKSTRA);
   const [delay, setDelay] = useState(300);
   const context = useContext(Context);
-  const { begin, end, board, setBoard, pathFinder, clear } = context;
+  const { 
+    begin, end, board, setBoard, 
+    pathFinder, clear, 
+    setIsPathExist 
+  } = context;
 
   const onAlgoChange = (e) => {
     setType(e.target.value);
@@ -27,7 +31,8 @@ const Header = () => {
       setState: setBoard,
       delay
     });
-    pathFinder.current.execute();
+    const isPossiblePath = pathFinder.current.execute();
+    setIsPathExist(isPossiblePath);
   };
 
   const onClear = () => { 
@@ -45,7 +50,6 @@ const Header = () => {
       pathFinder.current.clearTimers();
     }
   }, [board, pathFinder, end]);
-
 
   return (
     <header className="content-header">

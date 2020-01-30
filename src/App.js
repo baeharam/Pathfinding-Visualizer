@@ -1,12 +1,15 @@
 import React from 'react';
 import Container from './components/Container/Container';
+import { Provider } from 'Provider';
 import 'reset-css';
 import './App.scss';
 
 const App = () => {
 
   return (
-    <Container />
+    <Provider>
+      <Container /> 
+    </Provider>
   );
 };
 

@@ -19,3 +19,46 @@
     font-size: 20px;
   }
 }
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border-top: 7px solid red;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 3px 0 0 rgba(0,0,0,0.4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+
+  &__title {
+    font-family: inherit;
+    font-size: 36px;
+    color: red;
+    margin-bottom: 20px;
+  }
+
+  &__content {
+    font-size: 20px;
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    border: none;
+    background-color: rgb(250, 164, 164);
+    color: white;
+    cursor: pointer;
+  }
+}
