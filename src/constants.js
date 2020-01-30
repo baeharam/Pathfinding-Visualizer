@@ -1,3 +1,5 @@
+import uuidv4 from 'uuid/v4';
+
 export const BOARD_ROW = 16;
 export const BOARD_COL = 30;
 
@@ -12,3 +14,12 @@ export const INITIAL_COLOR = 'rgba(0,0,0,0.3)';
 export const DIJKSTRA = 'dijkstra';
 export const BELLMAN_FORD = 'bellman-ford';
 export const A_STAR = 'A-star';
+
+// uuid
+export const KEYS = [];
+for (let i=0; i<BOARD_ROW; i++) {
+  KEYS[i] = [];
+  for (let j=0; j<BOARD_COL; j++) {
+    KEYS[i][j] = uuidv4();
+  }
+}
