@@ -19,7 +19,7 @@ const Board = () => {
 
   const changeColor = (e : ElementEvent<HTMLDivElement>, type='WALL') => {
     if (e.target.className !== 'board__col') return;
-    if (e.target.style.backgroundColor === INITIAL_COLOR) return;
+    if (e.target.style.backgroundColor !== INITIAL_COLOR) return;
     const data : DOMStringMap = e.target.dataset;
     const ridx = parseInt(data.ridx), cidx = parseInt(data.cidx);
     const copy = JSON.parse(JSON.stringify(board));

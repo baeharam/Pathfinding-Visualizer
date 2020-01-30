@@ -28,10 +28,10 @@ export default class BellmanFord extends PathFinder {
           dist[nextX][nextY] = dist[i][j] + 1;
           if (!(nextX === end.x && nextY === end.y)) {
             copy[nextX][nextY].color = VISITED_COLOR;
+            copy[nextX][nextY].visit = true;
           } else {
             find = true;
           }
-          copy[nextX][nextY].visit = true;
           prev[nextX][nextY] = { x: i, y: j };
           isUpdated = true;
         }
@@ -53,6 +53,7 @@ export default class BellmanFord extends PathFinder {
       timeFactor++;
       if (relaxedResult.find) find = true;
     }
+    copy[this.end.x][this.end.y].visit = true;
     this.updateBoard(timeFactor);
     return find;
   }

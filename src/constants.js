@@ -9,7 +9,7 @@ export const VISITED_COLOR = 'hsla(193, 100%, 73%, 0.89)';
 export const SHORTEST_COLOR = 'red';
 export const FIXED_COLOR = 'black';
 export const CLICKED_COLOR = 'yellow';
-export const INITIAL_COLOR = 'rgba(0,0,0,0.3)';
+export const INITIAL_COLOR = 'rgba(0, 0, 0, 0.3)';
 
 // algorithm
 export const DIJKSTRA = 'dijkstra';
