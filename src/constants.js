@@ -1,10 +1,14 @@
 export const BOARD_ROW = 16;
 export const BOARD_COL = 30;
 
-export const VISITED_COLOR = 'yellow';
+// Color
+export const VISITED_COLOR = 'hsla(193, 100%, 73%, 0.89)';
 export const SHORTEST_COLOR = 'red';
 export const FIXED_COLOR = 'black';
+export const CLICKED_COLOR = 'yellow';
+export const INITIAL_COLOR = 'rgba(0,0,0,0.3)';
 
 // algorithm
 export const DIJKSTRA = 'dijkstra';
-export const FLOYD = 'floyd';
+export const BELLMAN_FORD = 'bellman-ford';
+export const A_STAR = 'A-star';

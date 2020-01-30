@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { DIJKSTRA, BELLMAN_FORD, SHORTEST_COLOR } from 'constants.js';
+import { DIJKSTRA, BELLMAN_FORD, SHORTEST_COLOR, A_STAR } from 'constants.js';
 import { Context } from 'Provider';
 import PathFinder from 'algorithms/index.js';
 import './Header.scss';
@@ -52,6 +52,7 @@ const Header = () => {
       <select className="content-header__select" onChange={onAlgoChange}>
         <option value={DIJKSTRA} defaultChecked={true}>Dijkstra</option>
         <option value={BELLMAN_FORD}>Bellman-Ford</option>
+        <option value={A_STAR}>A*</option>
       </select>
       <select className="content-header__select" onChange={onDelayChange} defaultValue={300}>
         <option value={550}>slowest</option>
