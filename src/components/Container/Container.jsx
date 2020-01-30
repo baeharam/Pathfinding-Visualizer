@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-modal';
 import Header from '../Header/Header';
@@ -9,8 +11,14 @@ Modal.setAppElement('#root');
 
 const Container = () => {
 
+  type ContextType = {
+    isPathExist: boolean,
+    pathFinder: typeof React.useRef,
+    clear: (void) => void
+  };
+
   const context = useContext(Context);
-  const { isPathExist, pathFinder, clear } = context;
+  const { isPathExist, pathFinder, clear } : ContextType = context;
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

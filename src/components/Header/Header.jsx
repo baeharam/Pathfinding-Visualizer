@@ -1,26 +1,31 @@
+// @flow
+
 import React, { useState, useContext, useEffect } from 'react';
 import { DIJKSTRA, BELLMAN_FORD, SHORTEST_COLOR, A_STAR } from 'constants.js';
-import { Context } from 'Provider';
+import { Context, type ContextType } from 'Provider';
 import PathFinder from 'algorithms/index.js';
 import './Header.scss';
 
 const Header = () => {
 
-  const [type, setType] = useState(DIJKSTRA);
-  const [delay, setDelay] = useState(300);
-  const context = useContext(Context);
+  const [type, setType] = useState<string>(DIJKSTRA);
+  const [delay, setDelay] = useState<number>(300);
+  const context = useContext<ContextType>(Context);
   const { 
     begin, end, board, setBoard, 
     pathFinder, clear, 
     setIsPathExist 
   } = context;
 
-  const onAlgoChange = (e) => {
+  declare type ElementEvent<E> = {
+      target: E
+  } & Event;
+  const onAlgoChange = (e : ElementEvent<HTMLSelectElement>) => {
     setType(e.target.value);
   };
 
-  const onDelayChange = (e) => {
-    setDelay(e.target.value);
+  const onDelayChange = (e : ElementEvent<HTMLSelectElement>) => {
+    setDelay(+e.target.value);
   };
 
   const onVisualize = () => {
