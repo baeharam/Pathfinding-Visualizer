@@ -64,6 +64,12 @@
       background-color: $oc-teal-5;
     }
 
+    &--red {
+      @extend #{$button};
+      background-color: $oc-red-5;
+      box-shadow: 0 3px 3px 0 $oc-red-3;
+    }
+
     &:last-child {
       margin-right: 0;
     }

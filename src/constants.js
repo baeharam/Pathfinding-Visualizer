@@ -1,15 +1,18 @@
 import uuidv4 from 'uuid/v4';
+import Styles from 'styles/_variables.scss';
 
 // Board Size
 export const BOARD_ROW = 16;
 export const BOARD_COL = 30;
 
 // Color
-export const VISITED_COLOR = '#75e1ff';
-export const SHORTEST_COLOR = '#cf2541';
-export const FIXED_COLOR = '#000000';
-export const CLICKED_COLOR = '#fcba03';
-export const INITIAL_COLOR = '#a1a6a3';
+export const INITIAL_COLOR = Styles.initialColor;
+export const VISITED_COLOR = Styles.visitedColor;
+export const CLICKED_COLOR = Styles.clickedColor;
+export const FIXED_COLOR = Styles.fixedColor;
+export const SHORTEST_COLOR = Styles.shortestColor;
+export const COLOR_TYPES 
+  = ['initial', 'visited', 'clicked', 'fixed', 'shortest'];
 
 // algorithm
 export const DIJKSTRA = 'dijkstra';

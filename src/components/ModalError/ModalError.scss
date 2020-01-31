@@ -1,0 +1,19 @@
+@import 'open-color/open-color';
+@import 'styles/_mixins';
+@import 'styles/_placeholders';
+
+.modal-error {
+  @include modal($oc-red-7);
+
+  &__title {
+    @include modal-title($oc-red-7);
+  }
+
+  &__content {
+    @extend %modal-content;
+  }
+
+  &__close {
+    @include modal-close($oc-red-7);
+  }
+}

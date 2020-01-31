@@ -18,7 +18,7 @@ const Header = () => {
   const { 
     begin, end, updateItem, delay,
     pathFinder, clear, board, isVisualized,
-    setIsPathExist, setIsVisualized
+    setIsPathExist, setIsVisualized, setIsHelped
   } = context;
 
   const onAlgoChange = (e : ElementEvent<HTMLSelectElement>) => {
@@ -61,6 +61,10 @@ const Header = () => {
     }
   };
 
+  const onHelp = () => {
+    setIsHelped(true);
+  };
+
   return (
     <div className="content-header">
       <select className="content-header__select" onChange={onAlgoChange} id="algorithm" disabled={isVisualized}>
@@ -85,6 +89,9 @@ const Header = () => {
       </button>
       <button className="content-header__button--teal" onClick={onPause} disabled={!isVisualized}>
         {pause ? <FaPlay /> : <FaPause />}
+      </button>
+      <button className="content-header__button--red" onClick={onHelp} disabled={isVisualized && !pause}>
+        How to use?
       </button>
     </div>
   );

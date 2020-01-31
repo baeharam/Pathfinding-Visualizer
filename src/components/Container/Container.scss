@@ -1,3 +1,6 @@
+@import 'styles/_variables.scss';
+@import 'open-color/open-color';
+
 .header {
   display: flex;
   justify-content: center;
@@ -17,69 +20,5 @@
   
   &__author {
     font-size: 20px;
-  }
-}
-
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 200px;
-  background-color: white;
-  border-top: 7px solid red;
-  border-radius: 5px;
-  outline: none;
-  box-shadow: 0 3px 0 0 rgba(0,0,0,0.4);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-weight: bold;
-
-  &--info {
-    @extend .modal;
-    border-color: skyblue;
-    height: 300px;
-  }
-
-  &__title {
-    font-family: inherit;
-    font-size: 36px;
-    color: red;
-    margin-bottom: 20px;
-
-    &--info {
-      @extend .modal__title;
-      color: skyblue;
-    }
-  }
-
-  &__content {
-    font-size: 20px;
-
-    span {
-      font-size: 24px;
-      color: blue;
-    }
-  }
-
-  &__close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    border: none;
-    background-color: rgb(250, 164, 164);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s linear;
-
-    &:hover {
-      background-color: rgb(250, 73, 73);
-    }
   }
 }

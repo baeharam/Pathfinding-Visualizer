@@ -1,0 +1,45 @@
+@mixin modal($color) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 3px 0 0 rgba(0,0,0,0.4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+  border-top: 7px solid $color;
+}
+
+@mixin modal-title($color) {
+  font-family: inherit;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: $color;
+}
+
+@mixin modal-close($color) {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: $color;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+  opacity: 0.5;
+  outline: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}

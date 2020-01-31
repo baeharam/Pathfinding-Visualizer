@@ -1,0 +1,13 @@
+$visited-color: #75e1ff;
+$shortest-color: #cf2541;
+$fixed-color: #000000;
+$clicked-color: #fcba03;
+$initial-color: #a1a6a3;
+
+:export {
+  visitedColor: $visited-color;
+  shortestColor: $shortest-color;
+  fixedColor: $fixed-color;
+  clickedColor: $clicked-color;
+  initialColor: $initial-color;
+}
