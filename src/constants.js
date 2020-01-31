@@ -27,6 +27,7 @@ for (let i=0; i<BOARD_ROW; i++) {
 }
 
 // Item state
+export const ITEM_FIXED = 'ITEM_FIXED';
 export const ITEM_INITIAL = 'ITEM_INITIAL';
 export const ITEM_VISITED = 'ITEM_VISITED';
 export const ITEM_CLICKED = 'ITEM_CLICKED';

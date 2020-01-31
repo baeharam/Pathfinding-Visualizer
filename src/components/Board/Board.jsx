@@ -11,14 +11,25 @@ import Item from '../Item/Item';
 
 const Board = () => {
   const context = useContext<ContextType>(Context);
-  const { updateItem } = context;
+  const { updateItem, begin, end } = context;
   const [clicking, setClicking] = useState<boolean>(false);
+  const [dragging, setDragging] = useState<{|begin: boolean, end: boolean|}>({ begin: false, end: false });
 
-  const onMouseDown = () => {
-    setClicking(true);
+  const onMouseDown = (e : ElementEvent<HTMLDivElement>) => {
+    const ridx = parseInt(e.target.dataset.ridx);
+    const cidx = parseInt(e.target.dataset.cidx);
+
+    if (ridx === begin.current.x && cidx === begin.current.y) {
+      setDragging({ begin: true, end: false });
+    } else if (ridx === end.current.x && cidx === end.current.y) {
+      setDragging({ begin: false, end: true });
+    } else {
+      setClicking(true);
+    }
   };
   const onMouseUp = () => {
     setClicking(false);
+    setDragging({ begin: false, end: false });
   };
 
   const changeColor = (e : ElementEvent<HTMLDivElement>, mouseMove : boolean) => {
@@ -26,8 +37,8 @@ const Board = () => {
     const bg = e.target.style.backgroundColor;
     if (bg !== INITIAL_COLOR && bg !== CLICKED_COLOR) return;
 
-    const ridx = e.target.dataset.ridx;
-    const cidx = e.target.dataset.cidx;
+    const ridx = parseInt(e.target.dataset.ridx);
+    const cidx = parseInt(e.target.dataset.cidx);
 
     const itemType = (bg === CLICKED_COLOR && !mouseMove ? ITEM_INITIAL : ITEM_CLICKED);
     updateItem(ridx, cidx, itemType);
@@ -38,8 +49,24 @@ const Board = () => {
   };
 
   const onMouseMove = (e : ElementEvent<HTMLDivElement>) => {
-    if (!clicking) return;
-    changeColor(e, true);
+    if (e.target.className !== 'board__item') return;
+    const ridx = parseInt(e.target.dataset.ridx);
+    const cidx = parseInt(e.target.dataset.cidx);
+
+    if (dragging.begin || dragging.end) {
+      const formerX = (dragging.begin ? begin.current.x : end.current.x);
+      const formerY = (dragging.begin ? begin.current.y : end.current.y);
+
+      updateItem(formerX, formerY, ITEM_INITIAL);
+
+      const next = { x: ridx, y: cidx };
+      dragging.begin ? (begin.current = next) : (end.current = next);
+
+      updateItem(next.x, next.y);
+    } else {
+      if (!clicking) return;
+      changeColor(e, true);  
+    }
   };
 
   return (
