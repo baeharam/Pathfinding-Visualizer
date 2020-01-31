@@ -55,6 +55,7 @@ export default class Dijkstra extends PathFinder {
         return true;
       }
     }
+    this.clearTimers();
     return false;
   }
 }

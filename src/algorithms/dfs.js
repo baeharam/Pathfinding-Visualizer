@@ -47,6 +47,7 @@ export default class Dfs extends PathFinder {
 
   execute = () : boolean => {
     this._dfs(this.begin.x, this.begin.y, 1);
+    if (!this.find) this.clearTimers();
     return this.find;
   }
 }

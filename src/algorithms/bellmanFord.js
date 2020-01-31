@@ -50,6 +50,7 @@ export default class BellmanFord extends PathFinder {
       if (relaxedResult.find) find = true;
     }
     updateItem(end.x, end.y, ITEM_VISITED, timeFactor);
+    if (!find) this.clearTimers();
     return find;
   }
 }

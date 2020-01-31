@@ -4,22 +4,16 @@ import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-modal';
 import Header from '../Header/Header';
 import Board from '../Board/Board';
-import { Context } from 'Provider';
+import { Context, type ContextType } from 'Provider';
 import './Container.scss';
 
 Modal.setAppElement('#root');
 
 const Container = () => {
 
-  type ContextType = {
-    isPathExist: boolean,
-    pathFinder: typeof React.useRef,
-    clear: (void) => void
-  };
-
   const context = useContext(Context);
   const { 
-    isPathExist, pathFinder, clear, 
+    isPathExist, clear, 
     moveEndPoints, setMoveEndPoints 
   } : ContextType = context;
   const [isErrorOpen, setIsErrorOpen] = useState(false);
@@ -28,10 +22,9 @@ const Container = () => {
   useEffect(() => {
     if (!isPathExist) {
       clear();
-      pathFinder.current.clearTimers();
       setIsErrorOpen(true);
     }
-  }, [isPathExist, pathFinder, clear]);
+  }, [isPathExist, clear]);
 
   useEffect(() => {
     if (moveEndPoints) {

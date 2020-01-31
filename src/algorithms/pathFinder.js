@@ -15,13 +15,13 @@ export default class PathFinder {
   end: {| x: number, y: number |};
   updateItem: (number, number, string, ?number) => void;
   board: Array<Array<string>>;
+  timers : Array<number>;
 
   dist: Array<Array<number>>;
   prev: Array<Array<{| x: number, y: number |}>>;
   
   static dx : Array<number>;
   static dy : Array<number>;
-  static timers : Array<number>;
 
   constructor({ begin, end, updateItem, board } : ConstructorType){
     this.begin = begin;
@@ -29,11 +29,11 @@ export default class PathFinder {
     this.updateItem = updateItem;
     this._init();
     this.board = board;
+    this.timers = [];
   }
 
   static dx = [-1,1,0,0];
   static dy = [0,0,-1,1];
-  static timers = [];
 
   _init = () => {
     this.dist = new Array(BOARD_ROW);
@@ -50,8 +50,8 @@ export default class PathFinder {
   }
 
   clearTimers() {
-    PathFinder.timers.forEach((timer : TimeoutID) => { clearTimeout(timer); });
-    PathFinder.timers = [];
+    this.timers.forEach((timer : TimeoutID) => { clearTimeout(timer); });
+    this.timers = [];
   }
 
   paintShortestPath = () => {

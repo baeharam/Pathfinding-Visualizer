@@ -29,8 +29,8 @@ const Header = () => {
 
   const onVisualize = () => {
     pathFinder.current  = new PathFinder[type]({
-      begin,
-      end,
+      begin: begin.current,
+      end: end.current,
       updateItem,
       board: board.current
     });

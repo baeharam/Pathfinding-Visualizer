@@ -4,16 +4,16 @@ import PriorityQueue from 'js-priority-queue';
 import {
   BOARD_ROW,
   BOARD_COL,
-  VISITED_COLOR,
-  CLICKED_COLOR,
+  ITEM_CLICKED,
+  ITEM_VISITED,
 } from 'constants.js';
 import PathFinder, { type ConstructorType } from './pathFinder';
 
 export default class AStar extends PathFinder {
   opened: Array<Array<boolean>>;
 
-  constructor({begin, end, board, setState, delay} : ConstructorType){
-    super({ begin, end, board, setState, delay });
+  constructor(args : ConstructorType){
+    super(args);
     this.opened = new Array(BOARD_ROW);
     for (let i=0; i<BOARD_ROW; i++) {
       this.opened[i] = new Array(BOARD_COL).fill(false);
@@ -27,7 +27,7 @@ export default class AStar extends PathFinder {
 
   execute = () : boolean => {
     const { 
-      dist, pq, opened, copy,
+      dist, pq, opened, board, updateItem,
       prev, begin, _h, end
     } = this;
     let timeFactor = 1;
@@ -51,7 +51,7 @@ export default class AStar extends PathFinder {
         const nextY : number = currentY + PathFinder.dy[i];
 
         if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
-        if (copy[nextX][nextY].color === CLICKED_COLOR) continue;
+        if (board[nextX][nextY] === ITEM_CLICKED) continue;
 
         const g = dist[currentX][currentY] + 1;
         const nextF = g + _h({x : nextX, y: nextY});
@@ -60,16 +60,13 @@ export default class AStar extends PathFinder {
           prev[nextX][nextY] = { x: currentX, y: currentY };
           dist[nextX][nextY] = g;
 
-          if (!(nextX === end.x && nextY === end.y)) {
-            copy[nextX][nextY].color = VISITED_COLOR;
-          } else {
-            find = true;
-          }
-          copy[nextX][nextY].visit = true;
-          this.updateBoard(timeFactor);
+          updateItem(nextX, nextY, ITEM_VISITED, timeFactor);
           timeFactor++;
 
-          if (find) break;
+          if (nextX === end.x && nextY === end.y) {
+            find = true;
+            break;
+          }
 
           if (opened[nextX][nextY] === false) {
             pq.queue({x: nextX, y: nextY, f: nextF});
@@ -83,6 +80,7 @@ export default class AStar extends PathFinder {
         return true;
       }
     }
+    this.clearTimers();
     return false;
   }
 }
