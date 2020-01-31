@@ -1,0 +1,86 @@
+@import 'open-color/open-color';
+@import 'styles/_mixins';
+@import 'styles/_placeholders';
+@import 'styles/_variables';
+
+.modal-info {
+  $self: &;
+  @include modal($oc-indigo-7);
+  width: 700px;
+  height: 350px;
+  padding: 20px;
+  align-items: center;
+
+  &__title {
+    @include modal-title($oc-indigo-7);
+  }
+
+  &__color {
+    margin-bottom: 20px;
+  }
+
+  &__usage {
+    #{$self}__row {
+      margin-bottom: 20px;
+    }
+
+    #{$self}__square {
+      margin-right: 10px;
+    }
+
+    h2 {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    @extend %modal-content;
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__square {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-right: 20px;
+  
+    &--initial {
+      @extend #{$self}__square;
+      background-color: $initial-color;
+    }
+
+    &--visited {
+      @extend #{$self}__square;
+      background-color: $visited-color;
+    }
+
+    &--clicked {
+      @extend #{$self}__square;
+      background-color: $clicked-color;
+    }
+
+    &--fixed {
+      @extend #{$self}__square;
+      background-color: $fixed-color;
+    }
+
+    &--shortest {
+      @extend #{$self}__square;
+      background-color: $shortest-color;
+    }
+  }
+
+  &__close {
+    @include modal-close($oc-indigo-7);
+  }
+}
