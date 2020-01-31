@@ -2,12 +2,14 @@
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-modal';
-import Header from '../Header/Header';
-import Board from '../Board/Board';
-import { Context, type ContextType } from 'Provider';
-import './Container.scss';
+import { FaGithub } from 'react-icons/fa';
+import Header from 'components/Header/Header';
+import Board from 'components/Board/Board';
 import ModalInfo from 'components/ModalInfo/ModalInfo';
 import ModalError from 'components/ModalError/ModalError';
+import { Context, type ContextType } from 'Provider';
+import './Container.scss';
+
 
 Modal.setAppElement('#root');
 
@@ -41,6 +43,9 @@ const Container = () => {
       <Board />
       <footer className="footer">
         <p className="footer__author">Made by Haram Bae</p>
+        <a href="https://github.com/baeharam/Pathfinding-Visualizer" target="_blank" rel="noopener noreferrer">
+          <FaGithub className="footer__github" />
+        </a>
       </footer>
     </>
   );
