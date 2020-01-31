@@ -59,15 +59,15 @@
     transition: transform 0.2s linear;
     outline: none;
 
-    &--teal {
+    &--pause {
       @extend #{$button};
       background-color: $oc-teal-5;
     }
 
-    &--red {
+    &--usage {
       @extend #{$button};
-      background-color: $oc-red-5;
-      box-shadow: 0 3px 3px 0 $oc-red-3;
+      background-color: $oc-green-6;
+      box-shadow: 0 3px 3px 0 $oc-green-3;
     }
 
     &:last-child {

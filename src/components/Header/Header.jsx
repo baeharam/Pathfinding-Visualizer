@@ -87,10 +87,10 @@ const Header = () => {
       <button className="content-header__button" onClick={onClear} disabled={isVisualized && !pause}>
         Clear
       </button>
-      <button className="content-header__button--teal" onClick={onPause} disabled={!isVisualized}>
+      <button className="content-header__button--pause" onClick={onPause} disabled={!isVisualized}>
         {pause ? <FaPlay /> : <FaPause />}
       </button>
-      <button className="content-header__button--red" onClick={onHelp} disabled={isVisualized && !pause}>
+      <button className="content-header__button--usage" onClick={onHelp} disabled={isVisualized && !pause}>
         How to use?
       </button>
     </div>
