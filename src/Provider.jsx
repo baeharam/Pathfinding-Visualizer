@@ -7,18 +7,21 @@ type PositionType = {|x: number, y: number|};
 type SetItemCacheType = { [key: string] : (string) => void };
 
 export type ContextType = {|
-  isPathExist: { current: boolean },
+  isPathExist: boolean,
+  isVisualized: boolean,
+
   begin: { current: PositionType },
   end: { current: PositionType },
   board: { current: Array<Array<string>> },
-  isPathExist: { current: boolean },
   setItemCache: { current: SetItemCacheType },
   pathFinder: { current: any },
   delay: { current: number },
 
   clear: (void) => void,
   updateItem: (number, number, string, number) => void,
-  setIsPathExist: (boolean) => void
+
+  setIsPathExist: (boolean) => void,
+  setIsVisualized: (boolean) => void,
 |};
 
 const Context = createContext<ContextType>();
@@ -26,6 +29,8 @@ const Context = createContext<ContextType>();
 const Provider = (props : { children: Node }) => {
 
   const [isPathExist, setIsPathExist] = useState<boolean>(true);
+  const [isVisualized, setIsVisualized] = useState<boolean>(false);
+
   const begin = useRef<PositionType>({ x: Math.round(BOARD_ROW/2), y: 2})
   const end = useRef<PositionType>({ x: Math.round(BOARD_ROW/2), y: BOARD_COL-3})
   const board = useRef<Array<Array<string>>>(BOARD);
@@ -59,11 +64,15 @@ const Provider = (props : { children: Node }) => {
 
   return (
     <Context.Provider value={{
+      // States
+      isPathExist, isVisualized,
+
       // Methods
       clear, updateItem, setIsPathExist,
+      setIsVisualized,
 
       // Refs
-      pathFinder, begin, end, isPathExist,
+      pathFinder, begin, end,
       board, setItemCache, delay
     }}>
       {props.children}

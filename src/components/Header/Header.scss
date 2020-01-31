@@ -51,8 +51,13 @@
       margin-right: 0;
     }
 
-    &:hover {
+    &:hover:enabled {
       transform: translateY(-10%);
+    }
+
+    &:disabled {
+      background-color: $oc-gray-5;
+      box-shadow: none;
     }
   }
 }

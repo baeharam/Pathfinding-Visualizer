@@ -9,7 +9,7 @@ import './Item.scss';
 const Item = ({ ridx, cidx }) => {
 
   const [type, setType] = useState(ITEM_INITIAL);
-  const { setItemCache, begin, end, pathFinder } = useContext(Context);
+  const { setItemCache, begin, end, pathFinder, setIsVisualized } = useContext(Context);
 
   setItemCache.current[KEYS[ridx][cidx]] = setType;
 
@@ -22,8 +22,9 @@ const Item = ({ ridx, cidx }) => {
   useEffect(() => {
     if ((type === ITEM_SHORTEST) && (ridx === end.current.x && cidx === end.current.y)) {
       pathFinder.current.clearTimers();
+      setIsVisualized(false);
     }
-  }, [type, end, pathFinder, ridx, cidx]);
+  }, [type, end, pathFinder, ridx, cidx, setIsVisualized]);
 
   const getColor = () => {
     if ((ridx === begin.current.x && cidx === begin.current.y) || (ridx === end.current.x && cidx === end.current.y)) {

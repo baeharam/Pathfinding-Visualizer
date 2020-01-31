@@ -15,8 +15,8 @@ const Header = () => {
   const context = useContext<ContextType>(Context);
   const { 
     begin, end, updateItem, delay,
-    pathFinder, clear, board,
-    setIsPathExist
+    pathFinder, clear, board, isVisualized,
+    setIsPathExist, setIsVisualized
   } = context;
 
   const onAlgoChange = (e : ElementEvent<HTMLSelectElement>) => {
@@ -28,6 +28,9 @@ const Header = () => {
   };
 
   const onVisualize = () => {
+    if (isVisualized) return;
+    setIsVisualized(true);
+
     pathFinder.current  = new PathFinder[type]({
       begin: begin.current,
       end: end.current,
@@ -39,6 +42,9 @@ const Header = () => {
   };
 
   const onClear = () => { 
+    if (isVisualized) return;
+    setIsVisualized(false);
+
     clear();
   };
 
@@ -57,10 +63,10 @@ const Header = () => {
         <option value={DELAY_FAST}>fast</option>
         <option value={DELAY_FASTEST}>fastest</option>
       </select>
-      <button className="content-header__button" onClick={onVisualize}>
+      <button className="content-header__button" onClick={onVisualize} disabled={isVisualized}>
         Visualize!
       </button>
-      <button className="content-header__button" onClick={onClear}>
+      <button className="content-header__button" onClick={onClear} disabled={isVisualized}>
         Clear
       </button>
     </div>
