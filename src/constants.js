@@ -5,11 +5,11 @@ export const BOARD_ROW = 16;
 export const BOARD_COL = 30;
 
 // Color
-export const VISITED_COLOR = 'hsla(193, 100%, 73%, 0.89)';
-export const SHORTEST_COLOR = 'red';
-export const FIXED_COLOR = 'black';
-export const CLICKED_COLOR = 'yellow';
-export const INITIAL_COLOR = 'rgba(0, 0, 0, 0.3)';
+export const VISITED_COLOR = '#75e1ff';
+export const SHORTEST_COLOR = '#cf2541';
+export const FIXED_COLOR = '#000000';
+export const CLICKED_COLOR = '#fcba03';
+export const INITIAL_COLOR = '#a1a6a3';
 
 // algorithm
 export const DIJKSTRA = 'dijkstra';

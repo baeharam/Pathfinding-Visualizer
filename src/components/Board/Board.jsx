@@ -3,7 +3,6 @@
 import React, { useContext, useState } from 'react';
 import { Context, type ContextType } from 'Provider';
 import { 
-  CLICKED_COLOR, INITIAL_COLOR, 
   KEYS, BOARD, ITEM_CLICKED, ITEM_INITIAL
 } from 'constants.js';
 import './Board.scss';
@@ -34,13 +33,13 @@ const Board = () => {
 
   const changeColor = (e : ElementEvent<HTMLDivElement>, mouseMove : boolean) => {
     if (e.target.className !== 'board__item') return;
-    const bg = e.target.style.backgroundColor;
-    if (bg !== INITIAL_COLOR && bg !== CLICKED_COLOR) return;
+    const type = e.target.dataset.type;
+    if (type !== ITEM_INITIAL && type !== ITEM_CLICKED) return;
 
     const ridx = parseInt(e.target.dataset.ridx);
     const cidx = parseInt(e.target.dataset.cidx);
 
-    const itemType = (bg === CLICKED_COLOR && !mouseMove ? ITEM_INITIAL : ITEM_CLICKED);
+    const itemType = (type === ITEM_CLICKED && !mouseMove ? ITEM_INITIAL : ITEM_CLICKED);
     updateItem(ridx, cidx, itemType);
   };
 

@@ -42,6 +42,7 @@ const Item = ({ ridx, cidx }) => {
   return (
     <div
       className="board__item"
+      data-type={type}
       data-ridx={ridx}
       data-cidx={cidx}
       style ={{

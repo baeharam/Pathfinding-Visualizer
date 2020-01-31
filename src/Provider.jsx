@@ -53,6 +53,7 @@ const Provider = (props : { children: Node }) => {
 
   const clear = () => {
     if (!isPathExist) setIsPathExist(true);
+    if (isVisualized) setIsVisualized(false);
     const currentBoard = board.current;
     currentBoard.forEach((row, ridx) => {
       row.forEach((item, cidx) => {
