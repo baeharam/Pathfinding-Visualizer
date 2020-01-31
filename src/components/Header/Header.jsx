@@ -2,7 +2,7 @@
 
 import React, { useState, useContext } from 'react';
 import { 
-  DIJKSTRA, BELLMAN_FORD, A_STAR, DFS,
+  DIJKSTRA, BELLMAN_FORD, A_STAR, DFS, BFS,
   DELAY_SLOWEST, DELAY_SLOW, DELAY_NORMAL, DELAY_FAST, DELAY_FASTEST
 } from 'constants.js';
 import { Context, type ContextType } from 'Provider';
@@ -66,6 +66,7 @@ const Header = () => {
       <select className="content-header__select" onChange={onAlgoChange} id="algorithm" disabled={isVisualized}>
         <option value={DIJKSTRA} defaultChecked={true}>Dijkstra</option>
         <option value={BELLMAN_FORD}>Bellman-Ford</option>
+        <option value={BFS}>0-1 BFS</option>
         <option value={DFS}>DFS</option>
         <option value={A_STAR}>A*</option>
       </select>

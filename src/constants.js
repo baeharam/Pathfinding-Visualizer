@@ -16,6 +16,7 @@ export const DIJKSTRA = 'dijkstra';
 export const BELLMAN_FORD = 'bellman-ford';
 export const A_STAR = 'A-star';
 export const DFS = 'DFS';
+export const BFS = 'BFS';
 
 // uuid
 export const KEYS = [];
