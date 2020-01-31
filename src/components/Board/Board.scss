@@ -6,14 +6,6 @@
   &__row {
     display: flex;
     flex-direction: row;
-  }
-
-  &__col {
-    width: 36px;
-    height: 36px;
-    margin: 3px;
-    border-radius: 3px;
-    box-shadow: 0 2px 0 #bbb;
-    cursor: pointer;
+    justify-content: center;
   }
 }

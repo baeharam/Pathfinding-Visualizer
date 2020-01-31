@@ -2,12 +2,16 @@
 
 import React, { useContext, useState } from 'react';
 import { Context, type ContextType } from 'Provider';
-import { CLICKED_COLOR, INITIAL_COLOR, FIXED_COLOR, KEYS } from 'constants.js';
+import { 
+  CLICKED_COLOR, INITIAL_COLOR, 
+  KEYS, BOARD, ITEM_CLICKED, ITEM_INITIAL
+} from 'constants.js';
 import './Board.scss';
+import Item from '../Item/Item';
 
 const Board = () => {
   const context = useContext<ContextType>(Context);
-  const { board, setBoard, setBegin, setEnd, begin, end } = context;
+  const { updateItem } = context;
   const [clicking, setClicking] = useState<boolean>(false);
 
   const onMouseDown = () => {
@@ -17,68 +21,41 @@ const Board = () => {
     setClicking(false);
   };
 
-  const changeColor = (e : ElementEvent<HTMLDivElement>, type='WALL') => {
-    if (e.target.className !== 'board__col') return;
-    if (e.target.style.backgroundColor !== INITIAL_COLOR) return;
-    const data : DOMStringMap = e.target.dataset;
-    const ridx = parseInt(data.ridx), cidx = parseInt(data.cidx);
-    const copy = JSON.parse(JSON.stringify(board));
+  const changeColor = (e : ElementEvent<HTMLDivElement>, mouseMove : boolean) => {
+    if (e.target.className !== 'board__item') return;
+    const bg = e.target.style.backgroundColor;
+    if (bg !== INITIAL_COLOR && bg !== CLICKED_COLOR) return;
 
-    switch (type) {
-      case 'WALL':
-        copy[ridx][cidx].color = CLICKED_COLOR;
-        break;
-      case 'BEGIN':
-        copy[begin.x][begin.y].color = INITIAL_COLOR;
-        copy[ridx][cidx].color = FIXED_COLOR;
-        setBegin({x: ridx, y: cidx});
-        break;
-      case 'END':
-        copy[end.x][end.y].color = INITIAL_COLOR;
-        copy[ridx][cidx].color = FIXED_COLOR;
-        setEnd({x: ridx, y: cidx});
-        break;
-      default:
-        throw new Error('Invalid type');
-    }
-    setBoard(copy);
-  }
+    const ridx = e.target.dataset.ridx;
+    const cidx = e.target.dataset.cidx;
+
+    const itemType = (bg === CLICKED_COLOR && !mouseMove ? ITEM_INITIAL : ITEM_CLICKED);
+    updateItem(ridx, cidx, itemType);
+  };
 
   const onClick = (e : ElementEvent<HTMLDivElement>) => {
-    let type = 'WALL';
-    if (e.ctrlKey) {
-      type = 'BEGIN';
-    } else if (e.altKey) {
-      type = 'END';
-    }
-    changeColor(e, type);
+    changeColor(e, false);
   };
 
   const onMouseMove = (e : ElementEvent<HTMLDivElement>) => {
     if (!clicking) return;
-    changeColor(e);
+    changeColor(e, true);
   };
 
   return (
-    <div className="board" 
-      onMouseDown={onMouseDown} 
-      onMouseUp={onMouseUp} 
-      onClick={onClick}
+    <div className="board"
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
-      tabIndex="0">
+      onClick={onClick}>
 
-      {board.map((row,ridx) => (
-        <div className="board__row" key={ridx} style={{ display: 'flex', justifyContent: 'center'}}>
+      {BOARD.map((row,ridx) => (
+        <div className="board__row" key={ridx}>
           {row.map((col, cidx) => (
-            <div 
-              className="board__col"
+            <Item
+              ridx={ridx}
+              cidx={cidx}
               key={KEYS[ridx][cidx]}
-              data-ridx={ridx}
-              data-cidx={cidx}
-              style={{
-                background: board[ridx][cidx].color,
-                transition: (clicking ? 'none' : 'background-color 0.3s linear')
-              }} 
             />
             )
           )}

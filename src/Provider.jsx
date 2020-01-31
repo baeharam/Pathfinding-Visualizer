@@ -1,72 +1,74 @@
 // @flow
 
 import React, { createContext, useState, useRef, type Node } from 'react';
-import { FIXED_COLOR, INITIAL_COLOR, BOARD } from './constants';
+import { BOARD, KEYS, DELAY_NORMAL, ITEM_INITIAL } from './constants';
 import PathFinder from 'algorithms/pathFinder';
 
 type PositionType = {|x: number, y: number|};
-type BoardType = Array<Array<{|color: string, visit: boolean|}>>;
+type SetItemCacheType = { [key: string] : (string) => void };
 
 export type ContextType = {|
   begin: PositionType,
   end: PositionType,
   setBegin: (PositionType) => void,
   setEnd: (PositionType) => void,
-  board: BoardType,
-  setBoard: (BoardType) => void,
   isPathExist: boolean,
   setIsPathExist: (boolean) => void,
   clear: (void) => void,
   pathFinder: any,
-  moveEndPoints: boolean,
-  setMoveEndPoints: (boolean) => void
 |};
 
 const Context = createContext<ContextType>();
-let _begin = { x: 7, y: 2 };
-let _end = { x: 11, y: 25 };
-BOARD[_begin.x][_begin.y] = { color: FIXED_COLOR, visit: true };
-BOARD[_end.x][_end.y] = { color: FIXED_COLOR, visit: false };
 
 const Provider = (props : {| children: Node |}) => {
 
-  const [begin, setBegin] = useState<PositionType>(_begin);
-  const [end, setEnd] = useState<PositionType>(_end);
-  const [board, setBoard] = useState<BoardType>(BOARD);
+  const [begin, setBegin] = useState<PositionType>({ x: 7, y: 2 });
+  const [end, setEnd] = useState<PositionType>({ x: 11, y: 25 });
   const [isPathExist, setIsPathExist] = useState<boolean>(true);
-  const [moveEndPoints, setMoveEndPoints] = useState<boolean>(false);
-  const pathFinder = useRef<any>(null);
 
-  const _clearPoints = () => {
-    BOARD[_begin.x][_begin.y] = { color: INITIAL_COLOR, visit: false };
-    BOARD[_end.x][_end.y] = { color: INITIAL_COLOR, visit: false };
-    BOARD[begin.x][begin.y] = { color: FIXED_COLOR, visit: true };
-    BOARD[end.x][end.y] = { color: FIXED_COLOR, visit: false };
-    _begin = begin;
-    _end = end;
+  const board = useRef<Array<Array<string>>>(BOARD);
+  const setItemCache = useRef<SetItemCacheType>({});
+  const pathFinder = useRef<any>(null);
+  const delay = useRef<number>(DELAY_NORMAL);
+
+  const updateItem = (ridx, cidx, type, timeFactor = null) => {
+    board.current[ridx][cidx] = type;
+    const setItem = setItemCache.current[KEYS[ridx][cidx]];
+
+    if (timeFactor) {
+      const timer = 
+        setTimeout(() => { setItem(type); }, timeFactor*delay.current);
+      PathFinder.timers.push(timer);
+    } else {
+      console.log('check');
+      setItem(type);
+    }
   };
 
   const clear = () => {
-    _clearPoints()
-    setBoard(BOARD);
-    if (isPathExist === false) {
-      setIsPathExist(true);
-    }
-    if (pathFinder.current instanceof PathFinder) {
-      pathFinder.current.clear(BOARD);
-    }
+    const currentBoard = board.current;
+    currentBoard.forEach((row, ridx) => {
+      row.forEach((item, cidx) => {
+        const setItem = setItemCache.current[KEYS[ridx][cidx]];
+        setItem(ITEM_INITIAL);
+      });
+    });
   };
 
   return (
     <Context.Provider value={{
+      // State and method
       begin, setBegin,
-      end, setEnd,
-      board, setBoard,
-      pathFinder,clear,
+      end, setEnd,clear,
       isPathExist, setIsPathExist,
-      moveEndPoints, setMoveEndPoints
-    }}
-    >
+      updateItem,
+
+      // Refs
+      pathFinder,
+      board,
+      setItemCache,
+      delay
+    }}>
       {props.children}
     </Context.Provider>
   );
