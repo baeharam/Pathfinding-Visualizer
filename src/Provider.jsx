@@ -2,6 +2,7 @@
 
 import React, { createContext, useRef, useState, type Node } from 'react';
 import { BOARD, KEYS, DELAY_NORMAL, ITEM_INITIAL, ITEM_FIXED, BOARD_ROW, BOARD_COL } from './constants';
+import Timer from 'algorithms/Timer';
 
 type PositionType = {|x: number, y: number|};
 type SetItemCacheType = { [key: string] : (string) => void };
@@ -38,13 +39,12 @@ const Provider = (props : { children: Node }) => {
   const pathFinder = useRef<any>(null);
   const delay = useRef<number>(DELAY_NORMAL);
 
-  const updateItem = (ridx, cidx, type = ITEM_FIXED, timeFactor = null) => {
+  const updateItem = (ridx, cidx, type : string = ITEM_FIXED, timeFactor = null) => {
     board.current[ridx][cidx] = type;
     const setItem = setItemCache.current[KEYS[ridx][cidx]];
 
     if (timeFactor) {
-      const timer = 
-        setTimeout(() => { setItem(type); }, timeFactor*delay.current);
+      const timer = new Timer({ callback: () => setItem(type), delay: timeFactor*delay.current });
       pathFinder.current.timers.push(timer);
     } else {
       setItem(type);

@@ -1,6 +1,7 @@
 // @flow
 
 import { BOARD_ROW, BOARD_COL, ITEM_SHORTEST } from 'constants.js';
+import Timer from './Timer';
 
 export type ConstructorType = {
   begin: {| x: number, y: number |},
@@ -15,7 +16,7 @@ export default class PathFinder {
   end: {| x: number, y: number |};
   updateItem: (number, number, string, ?number) => void;
   board: Array<Array<string>>;
-  timers : Array<number>;
+  timers : Array<Timer>;
 
   dist: Array<Array<number>>;
   prev: Array<Array<{| x: number, y: number |}>>;
@@ -50,8 +51,16 @@ export default class PathFinder {
   }
 
   clearTimers() {
-    this.timers.forEach((timer : TimeoutID) => { clearTimeout(timer); });
+    this.timers.forEach((timer : Timer) => { timer.destroy() });
     this.timers = [];
+  }
+
+  stopTimers() {
+    this.timers.forEach((timer) => timer.pause());
+  }
+
+  resumeTimers() {
+    this.timers.forEach((timer) => timer.resume());
   }
 
   paintShortestPath = () => {

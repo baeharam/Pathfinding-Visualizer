@@ -11,6 +11,11 @@
   font-size: 20px;
   color: white;
 
+  %disabled {
+    background-color: $oc-gray-5;
+    box-shadow: none;
+  }
+
   &__select {
     height: 100%;
     width: 200px;
@@ -30,9 +35,15 @@
     background-position-x: 100%;
     background-position-y: 5px;
     padding-left: 10px;
+
+    &:disabled {
+      @extend %disabled;
+    }
   }
 
   &__button {
+    $button: &;
+    display: flex;
     font-family: inherit;
     font-weight: bold;
     font-size: inherit;
@@ -46,6 +57,12 @@
     box-shadow: 0 3px 3px 0 $oc-blue-3;
     color: inherit;
     transition: transform 0.2s linear;
+    outline: none;
+
+    &--teal {
+      @extend #{$button};
+      background-color: $oc-teal-5;
+    }
 
     &:last-child {
       margin-right: 0;
@@ -56,8 +73,7 @@
     }
 
     &:disabled {
-      background-color: $oc-gray-5;
-      box-shadow: none;
+      @extend %disabled;
     }
   }
 }
