@@ -3,8 +3,8 @@
 import {
   BOARD_ROW,
   BOARD_COL,
-  VISITED_COLOR,
-  CLICKED_COLOR,
+  ITEM_CLICKED,
+  ITEM_VISITED
 } from 'constants.js';
 import PathFinder, { type ConstructorType } from './pathFinder';
 
@@ -22,7 +22,7 @@ export default class Dfs extends PathFinder {
   }
 
   _dfs = (x : number, y : number, timeFactor : number) => {
-    const { prev, end, visited, copy, updateBoard, _dfs } = this;
+    const { prev, end, visited, board, updateItem, _dfs } = this;
     visited[x][y] = true;
 
     for (let i=0; i<PathFinder.dx.length; i++) {
@@ -30,18 +30,17 @@ export default class Dfs extends PathFinder {
       const nextY = y + PathFinder.dy[i];
 
       if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
-      if (visited[nextX][nextY] || copy[nextX][nextY].color === CLICKED_COLOR) continue;
+      if (visited[nextX][nextY] || board[nextX][nextY] === ITEM_CLICKED) continue;
 
-      if (!(nextX === end.x && nextY === end.y)) {
-        copy[nextX][nextY].color = VISITED_COLOR;
-      } else {
-        this.find = true;
-      }
       prev[nextX][nextY] = { x, y };
-      copy[nextX][nextY].visit = true;
-      updateBoard(timeFactor);
-      if (this.find) return;
-      _dfs(nextX, nextY, timeFactor);
+      updateItem(nextX, nextY, ITEM_VISITED, timeFactor);
+
+      if (nextX === end.x && nextY === end.y) {
+        this.find = true;
+        return;
+      }
+      _dfs(nextX, nextY, timeFactor+1);
+      
       if (this.find) return;
     }
   }
