@@ -8,6 +8,7 @@ import Board from 'components/Board/Board';
 import ModalInfo from 'components/ModalInfo/ModalInfo';
 import ModalError from 'components/ModalError/ModalError';
 import { Context, type ContextType } from 'Provider';
+import Helmet from 'react-helmet';
 import './Container.scss';
 
 Modal.setAppElement('#root');
@@ -33,6 +34,9 @@ const Container = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Pathfinding Visualizer</title>
+      </Helmet>
       <header className="header">
         <h1 className="header__title">Pathfinding Visualizer</h1>
       </header>
