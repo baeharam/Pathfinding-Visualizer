@@ -1,11 +1,12 @@
 @import 'open-color/open-color';
 @import 'styles/_placeholders';
+@import 'styles/_variables';
 
 .content-header {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 60px;
+  height: calc(#{$content-header-height} - 20px);
   margin-bottom: 20px;
   padding: 10px 0;
   box-sizing: border-box;

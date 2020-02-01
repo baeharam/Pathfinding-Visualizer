@@ -11,3 +11,8 @@ $initial-color: #a1a6a3;
   clickedColor: $clicked-color;
   initialColor: $initial-color;
 }
+
+$header-height: 10vh;
+$content-header-height: 9vh;
+$footer-height: 10vh;
+$board-height: calc(100vh - (#{$header-height} + #{$content-header-height} + #{$footer-height}));
