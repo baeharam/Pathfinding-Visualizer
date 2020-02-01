@@ -2,8 +2,8 @@ import uuidv4 from 'uuid/v4';
 import Styles from 'styles/_variables.scss';
 
 // Board Size
-export const BOARD_ROW = 16;
-export const BOARD_COL = 30;
+export const BOARD_ROW = Styles.boardRow;
+export const BOARD_COL = Styles.boardCol;
 
 // Color
 export const INITIAL_COLOR = Styles.initialColor;

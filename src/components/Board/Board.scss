@@ -5,6 +5,7 @@
   flex-direction: column;
   outline: none;
   height: $board-height;
+  margin: 0 auto;
 
   &__row {
     display: flex;

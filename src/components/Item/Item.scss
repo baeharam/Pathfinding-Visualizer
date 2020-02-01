@@ -1,6 +1,8 @@
+@import 'styles/_variables';
+
 .board__item {
-  width: 36px;
-  height: 36px;
+  width: $border-item-size;
+  height: $border-item-size;
   margin: 3px;
   border-radius: 3px;
   box-shadow: 0 2px 0 #bbb;
