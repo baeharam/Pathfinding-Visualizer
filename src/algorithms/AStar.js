@@ -22,22 +22,29 @@ export default class AStar extends PathFinder {
 
   execute = (): boolean => {
     const { dist, pq, opened, board, updateItem, prev, begin, _h, end } = this;
-    let timeFactor = 1;
-
     const fBegin = _h(begin);
     pq.queue({ x: begin.x, y: begin.y, f: fBegin });
     dist[begin.x][begin.y] = 0;
     opened[begin.x][begin.y] = true;
+    console.log(this.opened);
+
+    let find = false;
+    let timeFactor = 1;
 
     while (pq.length) {
       const current: {| x: number, y: number, f: number |} = pq.peek();
       const currentX = current.x;
       const currentY = current.y;
 
+      if (currentX === end.x && currentY === end.y) {
+        pq.clear();
+        find = true;
+        break;
+      }
+
       opened[currentX][currentY] = false;
       pq.dequeue();
 
-      let find = false;
       for (let i = 0; i < PathFinder.dx.length; i++) {
         const nextX: number = currentX + PathFinder.dx[i];
         const nextY: number = currentY + PathFinder.dy[i];
@@ -56,24 +63,14 @@ export default class AStar extends PathFinder {
           updateItem(nextX, nextY, ITEM_VISITED, timeFactor);
           timeFactor++;
 
-          if (nextX === end.x && nextY === end.y) {
-            find = true;
-            break;
-          }
-
           if (opened[nextX][nextY] === false) {
             pq.queue({ x: nextX, y: nextY, f: nextF });
             opened[nextX][nextY] = true;
           }
         }
       }
-
-      if (find) {
-        pq.clear();
-        return true;
-      }
     }
-    this.clearTimers();
-    return false;
+    if (!find) this.clearTimers();
+    return find;
   };
 }

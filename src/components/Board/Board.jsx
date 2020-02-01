@@ -8,7 +8,7 @@ import Item from '../Item/Item';
 
 const Board = () => {
   const context = useContext<ContextType>(Context);
-  const { updateItem, begin, end } = context;
+  const { updateItem, begin, end, isVisualized } = context;
   const [clicking, setClicking] = useState<boolean>(false);
   const [dragging, setDragging] = useState<{| begin: boolean, end: boolean |}>({
     begin: false,
@@ -46,10 +46,12 @@ const Board = () => {
   };
 
   const onClick = (e: ElementEvent<HTMLDivElement>) => {
+    if (isVisualized) return;
     changeColor(e, false);
   };
 
   const onMouseMove = (e: ElementEvent<HTMLDivElement>) => {
+    if (isVisualized) return;
     if (e.target.className !== 'board__item') return;
     const ridx = Number(e.target.dataset.ridx);
     const cidx = Number(e.target.dataset.cidx);
