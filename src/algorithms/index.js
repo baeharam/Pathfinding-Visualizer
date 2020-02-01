@@ -8,7 +8,6 @@ import Dfs from './dfs';
 import Bfs from './bfs';
 
 type PathfinderType = {
-  // eslint-disable-next-line prettier/prettier
   [key: string]: | typeof Dijkstra
     | typeof BellmanFord
     | typeof AStar

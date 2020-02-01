@@ -75,7 +75,8 @@ const Provider = ({ children }: Node) => {
   const clear = () => {
     if (!isPathExist) setIsPathExist(true);
     if (isVisualized) setIsVisualized(false);
-    const currentBoard = board.current;
+    let currentBoard = board.current;
+    currentBoard = BOARD;
     currentBoard.forEach((row, ridx) => {
       row.forEach((item, cidx) => {
         const setItem = setItemCache.current[KEYS[ridx][cidx]];
