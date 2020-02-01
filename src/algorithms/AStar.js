@@ -1,44 +1,36 @@
 // @flow
 
 import PriorityQueue from 'js-priority-queue';
-import {
-  BOARD_ROW,
-  BOARD_COL,
-  ITEM_CLICKED,
-  ITEM_VISITED,
-} from 'constants.js';
+import { BOARD_ROW, BOARD_COL, ITEM_CLICKED, ITEM_VISITED } from 'constants.js';
 import PathFinder, { type ConstructorType } from './pathFinder';
 
 export default class AStar extends PathFinder {
   opened: Array<Array<boolean>>;
 
-  constructor(args : ConstructorType){
+  constructor(args: ConstructorType) {
     super(args);
     this.opened = new Array(BOARD_ROW);
-    for (let i=0; i<BOARD_ROW; i++) {
+    for (let i = 0; i < BOARD_ROW; i++) {
       this.opened[i] = new Array(BOARD_COL).fill(false);
     }
-    this.pq = new PriorityQueue<Object>({ comparator: (a,b) => a.f - b.f });
+    this.pq = new PriorityQueue<Object>({ comparator: (a, b) => a.f - b.f });
   }
 
-  _h = (start : {| x: number, y: number |}) : number => {
+  _h = (start: {| x: number, y: number |}): number => {
     return Math.abs(start.x - this.end.x) + Math.abs(start.y - this.end.y);
-  }
+  };
 
-  execute = () : boolean => {
-    const { 
-      dist, pq, opened, board, updateItem,
-      prev, begin, _h, end
-    } = this;
+  execute = (): boolean => {
+    const { dist, pq, opened, board, updateItem, prev, begin, _h, end } = this;
     let timeFactor = 1;
 
     const fBegin = _h(begin);
-    pq.queue({ x: begin.x, y: begin.y, f: fBegin })
+    pq.queue({ x: begin.x, y: begin.y, f: fBegin });
     dist[begin.x][begin.y] = 0;
     opened[begin.x][begin.y] = true;
 
-    while(pq.length) {
-      const current : {| x: number, y: number, f: number |} = pq.peek();
+    while (pq.length) {
+      const current: {| x: number, y: number, f: number |} = pq.peek();
       const currentX = current.x;
       const currentY = current.y;
 
@@ -46,15 +38,16 @@ export default class AStar extends PathFinder {
       pq.dequeue();
 
       let find = false;
-      for(let i=0; i<PathFinder.dx.length; i++) {
-        const nextX : number = currentX + PathFinder.dx[i];
-        const nextY : number = currentY + PathFinder.dy[i];
+      for (let i = 0; i < PathFinder.dx.length; i++) {
+        const nextX: number = currentX + PathFinder.dx[i];
+        const nextY: number = currentY + PathFinder.dy[i];
 
-        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
+        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL)
+          continue;
         if (board[nextX][nextY] === ITEM_CLICKED) continue;
 
         const g = dist[currentX][currentY] + 1;
-        const nextF = g + _h({x : nextX, y: nextY});
+        const nextF = g + _h({ x: nextX, y: nextY });
 
         if (g < dist[nextX][nextY]) {
           prev[nextX][nextY] = { x: currentX, y: currentY };
@@ -69,7 +62,7 @@ export default class AStar extends PathFinder {
           }
 
           if (opened[nextX][nextY] === false) {
-            pq.queue({x: nextX, y: nextY, f: nextF});
+            pq.queue({ x: nextX, y: nextY, f: nextF });
             opened[nextX][nextY] = true;
           }
         }
@@ -82,5 +75,5 @@ export default class AStar extends PathFinder {
     }
     this.clearTimers();
     return false;
-  }
+  };
 }

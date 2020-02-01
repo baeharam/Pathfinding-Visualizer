@@ -1,35 +1,31 @@
 // @flow
 
 import Queue from 'queue-fifo';
-import {
-  BOARD_ROW,
-  BOARD_COL,
-  ITEM_CLICKED,
-  ITEM_VISITED
-} from 'constants.js';
+import { BOARD_ROW, BOARD_COL, ITEM_CLICKED, ITEM_VISITED } from 'constants.js';
 import PathFinder, { type ConstructorType } from './pathFinder';
 
 export default class Bfs extends PathFinder {
   visited: Array<Array<boolean>>;
+
   queue: any;
 
-  constructor(args : ConstructorType) {
+  constructor(args: ConstructorType) {
     super(args);
     this.visited = [];
     this.q = new Queue();
-    for (let i=0; i<BOARD_ROW; i++) {
+    for (let i = 0; i < BOARD_ROW; i++) {
       this.visited[i] = Array(BOARD_COL).fill(false);
     }
   }
 
-  execute = () : boolean => {
-
+  execute = (): boolean => {
     const { q, begin, end, visited, board, prev, updateItem } = this;
     q.enqueue({ x: begin.x, y: begin.y });
     visited[begin.x][begin.y] = true;
-    let find = false, timeFactor = 1;
+    let find = false;
+    let timeFactor = 1;
 
-    while(!q.isEmpty()) {
+    while (!q.isEmpty()) {
       const current = q.peek();
       q.dequeue();
 
@@ -37,12 +33,14 @@ export default class Bfs extends PathFinder {
         break;
       }
 
-      for (let i=0; i<PathFinder.dx.length; i++) {
+      for (let i = 0; i < PathFinder.dx.length; i++) {
         const nextX = current.x + PathFinder.dx[i];
         const nextY = current.y + PathFinder.dy[i];
 
-        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
-        if (visited[nextX][nextY] || board[nextX][nextY] === ITEM_CLICKED) continue;
+        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL)
+          continue;
+        if (visited[nextX][nextY] || board[nextX][nextY] === ITEM_CLICKED)
+          continue;
 
         visited[nextX][nextY] = true;
         prev[nextX][nextY] = { x: current.x, y: current.y };
@@ -59,5 +57,5 @@ export default class Bfs extends PathFinder {
 
     if (!find) this.clearTimers();
     return find;
-  }
+  };
 }

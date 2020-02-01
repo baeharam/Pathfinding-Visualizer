@@ -11,8 +11,13 @@ export const VISITED_COLOR = Styles.visitedColor;
 export const CLICKED_COLOR = Styles.clickedColor;
 export const FIXED_COLOR = Styles.fixedColor;
 export const SHORTEST_COLOR = Styles.shortestColor;
-export const COLOR_TYPES 
-  = ['initial', 'visited', 'clicked', 'fixed', 'shortest'];
+export const COLOR_TYPES = [
+  'initial',
+  'visited',
+  'clicked',
+  'fixed',
+  'shortest',
+];
 
 // algorithm
 export const DIJKSTRA = 'dijkstra';
@@ -23,9 +28,9 @@ export const BFS = 'BFS';
 
 // uuid
 export const KEYS = [];
-for (let i=0; i<BOARD_ROW; i++) {
+for (let i = 0; i < BOARD_ROW; i++) {
   KEYS[i] = [];
-  for (let j=0; j<BOARD_COL; j++) {
+  for (let j = 0; j < BOARD_COL; j++) {
     KEYS[i][j] = uuidv4();
   }
 }
@@ -46,12 +51,12 @@ export const DELAY_FASTEST = 50;
 
 // Board
 export const BOARD = [];
-for(let i=0; i<BOARD_ROW; i++){
+for (let i = 0; i < BOARD_ROW; i++) {
   BOARD[i] = [];
-  for(let j=0; j<BOARD_COL; j++){
+  for (let j = 0; j < BOARD_COL; j++) {
     BOARD[i][j] = {
       color: INITIAL_COLOR,
-      visit: false
+      visit: false,
     };
   }
 }

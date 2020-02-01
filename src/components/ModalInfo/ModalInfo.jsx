@@ -6,10 +6,10 @@ import './ModalInfo.scss';
 
 type ModalInfoPropTypes = {
   isHelped: boolean,
-  onHelpClose: (any) => void
+  onHelpClose: any => void,
 };
 
-const ModalInfo = ({ isHelped, onHelpClose } : ModalInfoPropTypes) => {
+const ModalInfo = ({ isHelped, onHelpClose }: ModalInfoPropTypes) => {
   return (
     <Modal
       className="modal-info"
@@ -59,7 +59,9 @@ const ModalInfo = ({ isHelped, onHelpClose } : ModalInfoPropTypes) => {
           <h2>3. You can choose algorithm and speed from select box</h2>
         </div>
       </p>
-      <button onClick={onHelpClose} className="modal-info__close">X</button>
+      <button onClick={onHelpClose} className="modal-info__close" type="button">
+        X
+      </button>
     </Modal>
   );
 };

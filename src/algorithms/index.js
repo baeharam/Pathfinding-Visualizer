@@ -7,14 +7,15 @@ import AStar from './AStar';
 import Dfs from './dfs';
 import Bfs from './bfs';
 
-type PathfinderType 
-  = { [key: string] : (
-    typeof Dijkstra 
-    | typeof BellmanFord 
+type PathfinderType = {
+  // eslint-disable-next-line prettier/prettier
+  [key: string]: | typeof Dijkstra
+    | typeof BellmanFord
     | typeof AStar
-    | typeof Dfs) };
+    | typeof Dfs,
+};
 
-const Pathfinder : PathfinderType = {
+const Pathfinder: PathfinderType = {
   [DIJKSTRA]: Dijkstra,
   [BELLMAN_FORD]: BellmanFord,
   [A_STAR]: AStar,

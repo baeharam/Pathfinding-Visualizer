@@ -1,4 +1,5 @@
 @import 'open-color/open-color';
+@import 'styles/_plaecholders';
 
 .content-header {
   display: flex;
@@ -10,11 +11,6 @@
   box-sizing: border-box;
   font-size: 20px;
   color: white;
-
-  %disabled {
-    background-color: $oc-gray-5;
-    box-shadow: none;
-  }
 
   &__select {
     height: 100%;

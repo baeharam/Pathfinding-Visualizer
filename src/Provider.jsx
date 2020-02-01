@@ -1,11 +1,19 @@
 // @flow
 
 import React, { createContext, useRef, useState, type Node } from 'react';
-import { BOARD, KEYS, DELAY_NORMAL, ITEM_INITIAL, ITEM_FIXED, BOARD_ROW, BOARD_COL } from './constants';
 import Timer from 'algorithms/Timer';
+import {
+  BOARD,
+  KEYS,
+  DELAY_NORMAL,
+  ITEM_INITIAL,
+  ITEM_FIXED,
+  BOARD_ROW,
+  BOARD_COL,
+} from './constants';
 
-type PositionType = {|x: number, y: number|};
-type SetItemCacheType = { [key: string] : (string) => void };
+type PositionType = {| x: number, y: number |};
+type SetItemCacheType = { [key: string]: (string) => void };
 
 export type ContextType = {|
   isPathExist: boolean,
@@ -19,35 +27,45 @@ export type ContextType = {|
   pathFinder: { current: any },
   delay: { current: number },
 
-  clear: (void) => void,
+  clear: void => void,
   updateItem: (number, number, string, number) => void,
 
-  setIsPathExist: (boolean) => void,
-  setIsVisualized: (boolean) => void,
-  setIsHelped: (boolean) => void,
+  setIsPathExist: boolean => void,
+  setIsVisualized: boolean => void,
+  setIsHelped: boolean => void,
 |};
 
 const Context = createContext<ContextType>();
 
-const Provider = (props : { children: Node }) => {
-
+const Provider = ({ children }: Node) => {
   const [isPathExist, setIsPathExist] = useState<boolean>(true);
   const [isVisualized, setIsVisualized] = useState<boolean>(false);
   const [isHelped, setIsHelped] = useState<boolean>(false);
 
-  const begin = useRef<PositionType>({ x: Math.round(BOARD_ROW/2), y: 2})
-  const end = useRef<PositionType>({ x: Math.round(BOARD_ROW/2), y: BOARD_COL-3})
+  const begin = useRef<PositionType>({ x: Math.round(BOARD_ROW / 2), y: 2 });
+  const end = useRef<PositionType>({
+    x: Math.round(BOARD_ROW / 2),
+    y: BOARD_COL - 3,
+  });
   const board = useRef<Array<Array<string>>>(BOARD);
   const setItemCache = useRef<SetItemCacheType>({});
   const pathFinder = useRef<any>(null);
   const delay = useRef<number>(DELAY_NORMAL);
 
-  const updateItem = (ridx, cidx, type : string = ITEM_FIXED, timeFactor = null) => {
+  const updateItem = (
+    ridx,
+    cidx,
+    type: string = ITEM_FIXED,
+    timeFactor = null,
+  ) => {
     board.current[ridx][cidx] = type;
     const setItem = setItemCache.current[KEYS[ridx][cidx]];
 
     if (timeFactor) {
-      const timer = new Timer({ callback: () => setItem(type), delay: timeFactor*delay.current });
+      const timer = new Timer({
+        callback: () => setItem(type),
+        delay: timeFactor * delay.current,
+      });
       pathFinder.current.timers.push(timer);
     } else {
       setItem(type);
@@ -67,19 +85,30 @@ const Provider = (props : { children: Node }) => {
   };
 
   return (
-    <Context.Provider value={{
-      // States
-      isPathExist, isVisualized, isHelped,
+    <Context.Provider
+      value={{
+        // States
+        isPathExist,
+        isVisualized,
+        isHelped,
 
-      // Methods
-      clear, updateItem, setIsPathExist,
-      setIsVisualized, setIsHelped,
+        // Methods
+        clear,
+        updateItem,
+        setIsPathExist,
+        setIsVisualized,
+        setIsHelped,
 
-      // Refs
-      pathFinder, begin, end,
-      board, setItemCache, delay
-    }}>
-      {props.children}
+        // Refs
+        pathFinder,
+        begin,
+        end,
+        board,
+        setItemCache,
+        delay,
+      }}
+    >
+      {children}
     </Context.Provider>
   );
 };

@@ -10,16 +10,11 @@ import ModalError from 'components/ModalError/ModalError';
 import { Context, type ContextType } from 'Provider';
 import './Container.scss';
 
-
 Modal.setAppElement('#root');
 
 const Container = () => {
-
   const context = useContext(Context);
-  const { 
-    isPathExist, clear, 
-    isHelped, setIsHelped
-  } : ContextType = context;
+  const { isPathExist, clear, isHelped, setIsHelped }: ContextType = context;
   const [isErrorOpen, setIsErrorOpen] = useState(false);
 
   useEffect(() => {
@@ -29,8 +24,12 @@ const Container = () => {
     }
   }, [isPathExist, clear]);
 
-  const onErrorClose = () => { setIsErrorOpen(false); };
-  const onHelpClose = () => { setIsHelped(false); };
+  const onErrorClose = () => {
+    setIsErrorOpen(false);
+  };
+  const onHelpClose = () => {
+    setIsHelped(false);
+  };
 
   return (
     <>
@@ -43,7 +42,11 @@ const Container = () => {
       <Board />
       <footer className="footer">
         <p className="footer__author">Made by Haram Bae</p>
-        <a href="https://github.com/baeharam/Pathfinding-Visualizer" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://github.com/baeharam/Pathfinding-Visualizer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FaGithub className="footer__github" />
         </a>
       </footer>

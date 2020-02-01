@@ -1,40 +1,39 @@
 // @flow
 
 import PriorityQueue from 'js-priority-queue';
-import {
-  BOARD_ROW,
-  BOARD_COL,
-  ITEM_CLICKED,
-  ITEM_VISITED,
-} from 'constants.js';
+import { BOARD_ROW, BOARD_COL, ITEM_CLICKED, ITEM_VISITED } from 'constants.js';
 import PathFinder, { type ConstructorType } from './pathFinder';
 
 export default class Dijkstra extends PathFinder {
-
-  constructor(args : ConstructorType){
+  constructor(args: ConstructorType) {
     super(args);
     this.pq = new PriorityQueue<Object>({ comparator: (a, b) => a.d - b.d });
   }
 
-  execute = () : boolean => {
+  execute = (): boolean => {
     const { pq, dist, prev, board, begin, end, updateItem } = this;
 
     pq.queue({ x: begin.x, y: begin.y, d: 0 });
     let find = false;
 
-    while(pq.length) {
-      const current : {| x: number, y: number, d: number |} = pq.peek();
+    while (pq.length) {
+      const current: {| x: number, y: number, d: number |} = pq.peek();
       pq.dequeue();
-      const currentX : number = current.x;
-      const currentY : number = current.y;
-      const currentD : number = current.d;
-      
-      for(let i=0; i<PathFinder.dx.length; i++) {
+      const currentX: number = current.x;
+      const currentY: number = current.y;
+      const currentD: number = current.d;
+
+      for (let i = 0; i < PathFinder.dx.length; i++) {
         const nextX = currentX + PathFinder.dx[i];
         const nextY = currentY + PathFinder.dy[i];
-      
-        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL) continue;
-        if (dist[currentX][currentY] === Infinity || dist[currentX][currentY] + 1 >= dist[nextX][nextY]) continue;
+
+        if (nextX < 0 || nextX >= BOARD_ROW || nextY < 0 || nextY >= BOARD_COL)
+          continue;
+        if (
+          dist[currentX][currentY] === Infinity ||
+          dist[currentX][currentY] + 1 >= dist[nextX][nextY]
+        )
+          continue;
         if (board[nextX][nextY] === ITEM_CLICKED) continue;
 
         board[nextX][nextY] = ITEM_VISITED;
@@ -57,5 +56,5 @@ export default class Dijkstra extends PathFinder {
     }
     this.clearTimers();
     return false;
-  }
+  };
 }

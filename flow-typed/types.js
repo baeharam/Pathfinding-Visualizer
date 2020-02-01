@@ -1,3 +1,3 @@
 declare type ElementEvent<E> = {
-  target: E
+  target: E,
 } & Event;
