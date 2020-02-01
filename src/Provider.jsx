@@ -47,7 +47,7 @@ const Provider = ({ children }: Node) => {
     x: Math.round(BOARD_ROW / 2),
     y: BOARD_COL - 3,
   });
-  const board = useRef<Array<Array<string>>>(BOARD);
+  const board = useRef<Array<Array<string>>>(JSON.parse(JSON.stringify(BOARD)));
   const setItemCache = useRef<SetItemCacheType>({});
   const pathFinder = useRef<any>(null);
   const delay = useRef<number>(DELAY_NORMAL);
@@ -56,7 +56,7 @@ const Provider = ({ children }: Node) => {
     ridx,
     cidx,
     type: string = ITEM_FIXED,
-    timeFactor = null,
+    timeFactor: number = null,
   ) => {
     board.current[ridx][cidx] = type;
     const setItem = setItemCache.current[KEYS[ridx][cidx]];
@@ -75,12 +75,10 @@ const Provider = ({ children }: Node) => {
   const clear = () => {
     if (!isPathExist) setIsPathExist(true);
     if (isVisualized) setIsVisualized(false);
-    let currentBoard = board.current;
-    currentBoard = BOARD;
+    const currentBoard = board.current;
     currentBoard.forEach((row, ridx) => {
       row.forEach((item, cidx) => {
-        const setItem = setItemCache.current[KEYS[ridx][cidx]];
-        setItem(ITEM_INITIAL);
+        updateItem(ridx, cidx, ITEM_INITIAL);
       });
     });
   };
