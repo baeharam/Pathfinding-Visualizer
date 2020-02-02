@@ -29,6 +29,7 @@ const Header = () => {
     delay,
     pathFinder,
     clear,
+    clearPath,
     board,
     isVisualized,
     setIsPathExist,
@@ -46,6 +47,7 @@ const Header = () => {
 
   const onVisualize = () => {
     if (isVisualized) return;
+    clearPath();
     setIsVisualized(true);
 
     pathFinder.current = new PathFinder[type]({

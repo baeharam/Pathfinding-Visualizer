@@ -8,6 +8,7 @@ import {
   DELAY_NORMAL,
   ITEM_INITIAL,
   ITEM_FIXED,
+  ITEM_CLICKED,
   BOARD_ROW,
   BOARD_COL,
 } from './constants';
@@ -28,6 +29,7 @@ export type ContextType = {|
   delay: { current: number },
 
   clear: void => void,
+  clearPath: void => void,
   updateItem: (number, number, string, number) => void,
 
   setIsPathExist: boolean => void,
@@ -83,6 +85,16 @@ const Provider = ({ children }: Node) => {
     });
   };
 
+  const clearPath = () => {
+    board.current.forEach((row, ridx) => {
+      row.forEach((item, cidx) => {
+        if (board.current[ridx][cidx] !== ITEM_CLICKED) {
+          updateItem(ridx, cidx, ITEM_INITIAL);
+        }
+      });
+    });
+  };
+
   return (
     <Context.Provider
       value={{
@@ -93,6 +105,7 @@ const Provider = ({ children }: Node) => {
 
         // Methods
         clear,
+        clearPath,
         updateItem,
         setIsPathExist,
         setIsVisualized,
