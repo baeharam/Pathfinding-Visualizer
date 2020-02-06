@@ -60,12 +60,20 @@ const Header = () => {
     setIsPathExist(isPossiblePath);
   };
 
-  const onClear = () => {
+  const onClearAll = () => {
     if (isVisualized && !pause) return;
     if (pause) setPause(false);
     setIsVisualized(false);
 
     clear();
+  };
+
+  const onClearPath = () => {
+    if (isVisualized && !pause) return;
+    if (pause) setPause(false);
+    setIsVisualized(false);
+
+    clearPath();
   };
 
   const onPause = () => {
@@ -120,11 +128,19 @@ const Header = () => {
       </button>
       <button
         className="content-header__button"
-        onClick={onClear}
+        onClick={onClearAll}
         disabled={isVisualized && !pause}
         type="button"
       >
-        Clear
+        Clear All
+      </button>
+      <button
+        className="content-header__button"
+        onClick={onClearPath}
+        disabled={isVisualized && !pause}
+        type="button"
+      >
+        Clear Path
       </button>
       <button
         className="content-header__button--pause"
