@@ -4,7 +4,7 @@ import { BOARD_ROW, BOARD_COL, ITEM_CLICKED, ITEM_VISITED } from 'constants.js';
 import PathFinder from './pathFinder';
 
 export default class BellmanFord extends PathFinder {
-  _relax = (timeFactor: number): {| timeFactor: number, find: boolean |} => {
+  _relax = (timeFactor: number): {| time: number, find: boolean |} => {
     const { dist, prev, end, updateItem, board } = this;
     let find = false;
     let time = timeFactor;
@@ -48,7 +48,7 @@ export default class BellmanFord extends PathFinder {
     let find = false;
     for (let i = 1; i <= board.length - 1; i++) {
       const relaxedResult = _relax(timeFactor);
-      timeFactor = relaxedResult.timeFactor;
+      timeFactor = relaxedResult.time;
       timeFactor++;
       if (relaxedResult.find) find = true;
     }
