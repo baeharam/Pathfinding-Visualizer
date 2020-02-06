@@ -1,6 +1,6 @@
 # Pathfinding Visualizer
 
-**Pathfinding Visualizer created by React.js, SASS.**
+### [LIVE DEMO](https://baeharam.github.io/Pathfinding-Visualizer/)
 
 <img src="./images/visualizer.gif">
 
@@ -13,6 +13,14 @@
 * DFS
 * 0-1 BFS
 * A* with manhatten distance heuristic
+
+<br>
+
+## Technical Stack
+
+|                  UI Library                   |                   Styling                    |                    Typing                    |
+| :-------------------------------------------: | :------------------------------------------: | :------------------------------------------: |
+| <img src="./images/react.svg" height="100px"> | <img src="./images/sass.png" height="100px"> | <img src="./images/flow.jpg" height="100px"> |
 
 <br>
 
@@ -29,4 +37,4 @@ yarn start
 
 ## LICENSE
 
-MIT
+[MIT]('./LICENSE.md')
