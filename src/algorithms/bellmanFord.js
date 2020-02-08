@@ -30,27 +30,32 @@ export default class BellmanFord extends PathFinder {
 
           if (nextX === end.x && nextY === end.y) {
             find = true;
-            continue;
+            break;
           }
 
           updateItem(nextX, nextY, ITEM_VISITED, time);
           time++;
         }
+        if (find) break;
       }
     }
     return { time, find };
   };
 
   execute = (): boolean => {
-    const { board, _relax, updateItem, end } = this;
+    const { _relax, updateItem, end } = this;
 
     let timeFactor = 1;
     let find = false;
-    for (let i = 1; i <= board.length - 1; i++) {
+    const vertex = BOARD_ROW * BOARD_COL;
+    for (let i = 1; i <= vertex - 1; i++) {
       const relaxedResult = _relax(timeFactor);
       timeFactor = relaxedResult.time;
       timeFactor++;
-      if (relaxedResult.find) find = true;
+      if (relaxedResult.find) {
+        find = true;
+        break;
+      }
     }
     updateItem(end.x, end.y, ITEM_VISITED, timeFactor);
     if (!find) this.clearTimers();
