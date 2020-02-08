@@ -58,7 +58,7 @@ const Provider = ({ children }: Node) => {
     ridx,
     cidx,
     type: string = ITEM_FIXED,
-    timeFactor: number = null,
+    timeFactor: number = 0,
   ) => {
     board.current[ridx][cidx] = type;
     const setItem = setItemCache.current[KEYS[ridx][cidx]];

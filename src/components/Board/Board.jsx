@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { Context, type ContextType } from 'Provider';
 import { KEYS, BOARD, ITEM_CLICKED, ITEM_INITIAL } from 'constants.js';
 import './Board.scss';
@@ -14,6 +14,7 @@ const Board = () => {
     begin: false,
     end: false,
   });
+  const clickPos = useRef<{|x: number, y: number|}>({ x: -1, y: -1 });
 
   const onMouseDown = (e: ElementEvent<HTMLDivElement>) => {
     const ridx = Number(e.target.dataset.ridx);
@@ -24,6 +25,7 @@ const Board = () => {
     } else if (ridx === end.current.x && cidx === end.current.y) {
       setDragging({ begin: false, end: true });
     } else {
+      clickPos.current = { x: ridx, y: cidx };
       setClicking(true);
     }
   };
@@ -73,6 +75,7 @@ const Board = () => {
       updateItem(next.x, next.y);
     } else {
       if (!clicking) return;
+      if (clickPos.current.x === ridx && clickPos.current.y === cidx) return;
       changeColor(e, true);
     }
   };
