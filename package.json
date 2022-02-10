@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "flow-bin": "^0.117.0",
     "js-priority-queue": "^0.1.5",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "open-color": "^1.7.0",
     "queue-fifo": "^0.2.6",
     "react": "^16.12.0",
